@@ -9,6 +9,11 @@ namespace SeminarioSO.Clases
 {
     class clsLote
     {
-        private List<clsProceso> Procesos;
+        public Queue<clsProceso> Procesos;
+
+        public clsLote(Queue<clsProceso> Procesos)
+        {
+            this.Procesos = Procesos;
+        }
     }
 }

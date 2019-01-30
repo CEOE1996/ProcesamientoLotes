@@ -26,7 +26,7 @@ namespace SeminarioSO
                 return;
             }
 
-            frmAddProceso Agregar = new frmAddProceso(int.Parse(txtProcesos.Value.ToString()));
+            frmAddProceso Agregar = new frmAddProceso(decimal.ToInt32(txtProcesos.Value));
             this.Hide();
             Agregar.ShowDialog();
         }

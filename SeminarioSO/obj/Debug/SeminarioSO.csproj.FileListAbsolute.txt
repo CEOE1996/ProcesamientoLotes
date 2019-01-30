@@ -8,3 +8,4 @@ C:\Users\corozco\OneDrive\Documentos\CUCEI\8° Semestre\Sistemas Operativos de R
 C:\Users\corozco\OneDrive\Documentos\CUCEI\8° Semestre\Sistemas Operativos de Red\SeminarioSO\SeminarioSO\obj\Debug\SeminarioSO.csproj.GenerateResource.Cache
 C:\Users\corozco\OneDrive\Documentos\CUCEI\8° Semestre\Sistemas Operativos de Red\SeminarioSO\SeminarioSO\obj\Debug\SeminarioSO.exe
 C:\Users\corozco\OneDrive\Documentos\CUCEI\8° Semestre\Sistemas Operativos de Red\SeminarioSO\SeminarioSO\obj\Debug\SeminarioSO.pdb
+C:\Users\corozco\OneDrive\Documentos\CUCEI\8° Semestre\Sistemas Operativos de Red\SeminarioSO\SeminarioSO\obj\Debug\SeminarioSO.frmProcess.resources

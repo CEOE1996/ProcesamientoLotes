@@ -8,12 +8,12 @@ namespace SeminarioSO.Clases
 {
     class clsProceso
     {
-        private string Nombre;
-        private int N1;
-        private int N2;
-        private char Op;
-        private int TME;
-        private int Numero;
+        public string Nombre;
+        public int N1;
+        public int N2;
+        public char Op;
+        public int TME;
+        public int Numero;
 
         public clsProceso(String Nombre, int N1, int N2, char Op, int TME, int Numero)
         {

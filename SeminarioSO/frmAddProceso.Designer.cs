@@ -144,6 +144,7 @@
             // 
             // cboOp
             // 
+            this.cboOp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboOp.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboOp.FormattingEnabled = true;
             this.cboOp.Items.AddRange(new object[] {
@@ -204,6 +205,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "frmAddProceso";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmAddProceso";
             ((System.ComponentModel.ISupportInitialize)(this.txtN1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtN2)).EndInit();

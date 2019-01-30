@@ -9,20 +9,23 @@ namespace SeminarioSO.Clases
     class clsProceso
     {
         public string Nombre;
-        public int N1;
-        public int N2;
-        public char Op;
+        public string Operacion;
+        public decimal Resultado;
         public int TME;
         public int Numero;
 
-        public clsProceso(String Nombre, int N1, int N2, char Op, int TME, int Numero)
+        public clsProceso(String Nombre, string Operacion, decimal Resultado, int TME, int Numero)
         {
             this.Nombre = Nombre;
-            this.N1 = N1;
-            this.N2 = N2;
-            this.Op = Op;
+            this.Operacion = Operacion;
+            this.Resultado = Resultado;
             this.TME = TME;
             this.Numero = Numero;
+        }
+
+        public clsProceso()
+        {
+            
         }
 
         public override string ToString()

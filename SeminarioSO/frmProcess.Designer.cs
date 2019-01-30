@@ -274,6 +274,10 @@
             this.txtNombre.Size = new System.Drawing.Size(132, 28);
             this.txtNombre.TabIndex = 19;
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // frmProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);

@@ -46,11 +46,35 @@ namespace SeminarioSO
                 }
             }
 
+            decimal Resultado;
+            switch (cboOp.SelectedItem.ToString()[0])
+            {
+                case '+':
+                    Resultado = txtN1.Value + txtN2.Value;
+                    break;
+
+                case '-':
+                    Resultado = txtN1.Value - txtN2.Value;
+                    break;
+
+                case '*':
+                    Resultado = txtN1.Value * txtN2.Value;
+                    break;
+                case '/':
+                    Resultado = txtN1.Value / txtN2.Value;
+                    break;
+                case '%':
+                    Resultado = txtN1.Value % txtN2.Value;
+                    break;
+                default:
+                    Resultado = 0;
+                    break;
+            }
+
             clsProceso NuevoProceso = new clsProceso(
                                                         txtNombre.Text, 
-                                                        Decimal.ToInt32(txtN1.Value),
-                                                        Decimal.ToInt32(txtN2.Value),
-                                                        cboOp.SelectedItem.ToString()[0],
+                                                        txtN1.Value.ToString() + cboOp.SelectedItem.ToString()[0] + txtN2.Value.ToString(),
+                                                        Resultado,
                                                         Decimal.ToInt32(txtTiempo.Value),
                                                         Decimal.ToInt32(txtNumero.Value)
                                                     );

@@ -7,12 +7,13 @@ using SeminarioSO.Clases;
 
 namespace SeminarioSO.Clases
 {
-    class clsLote
+    public class clsLote
     {
         public Queue<clsProceso> Procesos;
 
         public clsLote()
         {
+            Procesos = new Queue<clsProceso>();
         }
 
         public clsLote(Queue<clsProceso> Procesos)

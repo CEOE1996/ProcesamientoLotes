@@ -27,7 +27,7 @@ namespace SeminarioSO
 
         private void btnContinuar_Click(object sender, EventArgs e)
         {
-            if(String.IsNullOrEmpty(txtNombre.Text) || txtNumero.Value <= 0 || String.IsNullOrEmpty(cboOp.SelectedItem.ToString()))
+            if(String.IsNullOrEmpty(txtNombre.Text) || txtNumero.Value <= 0 || txtTiempo.Value <= 0 || String.IsNullOrEmpty(cboOp.SelectedItem.ToString()))
             {
                 MessageBox.Show("Datos Inválidos", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -101,11 +101,16 @@ namespace SeminarioSO
                 {
                     ListLotes.Enqueue(new clsLote(Lote));
                 }
+
+                frmProcess Ventana = new frmProcess(ListLotes);
+                this.Hide();
+                Ventana.ShowDialog();
             }
             else
             {
                 lblCounter.Text = Counter.ToString() + " de " + NProcesos.ToString();
                 txtNombre.Clear();
+                txtNombre.Focus();
             }
 
         }

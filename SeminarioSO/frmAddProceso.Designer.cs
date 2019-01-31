@@ -114,7 +114,7 @@
             this.txtNombre.Location = new System.Drawing.Point(225, 104);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(197, 26);
-            this.txtNombre.TabIndex = 5;
+            this.txtNombre.TabIndex = 1;
             // 
             // label6
             // 
@@ -132,7 +132,7 @@
             this.txtN1.Location = new System.Drawing.Point(225, 144);
             this.txtN1.Name = "txtN1";
             this.txtN1.Size = new System.Drawing.Size(62, 26);
-            this.txtN1.TabIndex = 11;
+            this.txtN1.TabIndex = 2;
             // 
             // txtN2
             // 
@@ -140,7 +140,7 @@
             this.txtN2.Location = new System.Drawing.Point(359, 144);
             this.txtN2.Name = "txtN2";
             this.txtN2.Size = new System.Drawing.Size(62, 26);
-            this.txtN2.TabIndex = 12;
+            this.txtN2.TabIndex = 4;
             // 
             // cboOp
             // 
@@ -156,7 +156,7 @@
             this.cboOp.Location = new System.Drawing.Point(292, 144);
             this.cboOp.Name = "cboOp";
             this.cboOp.Size = new System.Drawing.Size(62, 28);
-            this.cboOp.TabIndex = 13;
+            this.cboOp.TabIndex = 3;
             // 
             // btnContinuar
             // 
@@ -164,7 +164,7 @@
             this.btnContinuar.Location = new System.Drawing.Point(161, 269);
             this.btnContinuar.Name = "btnContinuar";
             this.btnContinuar.Size = new System.Drawing.Size(113, 30);
-            this.btnContinuar.TabIndex = 14;
+            this.btnContinuar.TabIndex = 7;
             this.btnContinuar.Text = "Continuar";
             this.btnContinuar.UseVisualStyleBackColor = true;
             this.btnContinuar.Click += new System.EventHandler(this.btnContinuar_Click);
@@ -175,7 +175,7 @@
             this.txtTiempo.Location = new System.Drawing.Point(225, 184);
             this.txtTiempo.Name = "txtTiempo";
             this.txtTiempo.Size = new System.Drawing.Size(197, 26);
-            this.txtTiempo.TabIndex = 15;
+            this.txtTiempo.TabIndex = 5;
             // 
             // txtNumero
             // 
@@ -183,7 +183,7 @@
             this.txtNumero.Location = new System.Drawing.Point(224, 224);
             this.txtNumero.Name = "txtNumero";
             this.txtNumero.Size = new System.Drawing.Size(197, 26);
-            this.txtNumero.TabIndex = 16;
+            this.txtNumero.TabIndex = 6;
             // 
             // frmAddProceso
             // 

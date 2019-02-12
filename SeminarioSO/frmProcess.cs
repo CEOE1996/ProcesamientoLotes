@@ -17,10 +17,7 @@ namespace SeminarioSO
         clsLote LoteActual = new clsLote();
         clsProceso ProcesoActual;
         List<clsProceso> Concluidos = new List<clsProceso>();
-        int TT = 0;
-        int TR = 0;
-        int Counter = 0;
-        int NL = 0;
+        int Counter = 0, NL = 0;
 
         public frmProcess(Queue<clsLote> Lotes)
         {
@@ -31,28 +28,21 @@ namespace SeminarioSO
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if(TR > 0)
+            if(ProcesoActual != null && ProcesoActual.TR > 0)
             {
                 lblCounter.Text = (++Counter).ToString();
-                txtTT.Text = (++TT).ToString();
-                txtTR.Text = (--TR).ToString();
+                txtTR.Text = (--ProcesoActual.TR).ToString();
+                txtTT.Text = (ProcesoActual.TME - ProcesoActual.TR).ToString();
             }
             else if(LoteActual.Procesos.Count > 0)
             {
                 if (ProcesoActual != null) {
                     Concluidos.Add(ProcesoActual);
                 }
-                ProcesoActual = LoteActual.Procesos.Dequeue();
-                ProcesoActual.NL = NL;
-                dgActual.DataSource = Lotes;
-                txtOp .Text = ProcesoActual.Operacion;
-                txtNumero.Text = ProcesoActual.Numero.ToString();
-                txtTME.Text = ProcesoActual.TME.ToString();
-                TR = ProcesoActual.TME;
-                TT = 0;
-                txtTT.Text = (TT).ToString();
-                txtTR.Text = (TR).ToString();
-                dgActual.DataSource = SetActual(LoteActual);
+
+                setActual();
+                setData(ProcesoActual);
+
                 if (Concluidos.Count > 0)
                 {
                     dgConcluidos.DataSource = SetConcluidos(Concluidos);
@@ -81,19 +71,18 @@ namespace SeminarioSO
             }
             lblCounterLote.Text = Lotes.Count.ToString();
      
-            System.Threading.Thread.Sleep(1000);
-
         }
 
         private DataTable SetActual(clsLote L)
         {
             DataTable dt = new DataTable();
-            dt.Columns.Add("Nombre");
+            dt.Columns.Add("ID");
             dt.Columns.Add("TME");
+            dt.Columns.Add("TR");
 
-            foreach(clsProceso P in L.Procesos)
+            foreach (clsProceso P in L.Procesos)
             {
-                dt.Rows.Add(P.TME);
+                dt.Rows.Add(P.Numero, P.TME, P.TR);
             }
 
             return dt;
@@ -103,7 +92,7 @@ namespace SeminarioSO
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("Lote");
-            dt.Columns.Add("Número");
+            dt.Columns.Add("ID");
             dt.Columns.Add("Operacion");
             dt.Columns.Add("Resultado");
 
@@ -113,6 +102,54 @@ namespace SeminarioSO
             }
 
             return dt;
+        }
+
+        private void setData(clsProceso P)
+        {
+            txtOp.Text = P.Operacion;
+            txtNumero.Text = P.Numero.ToString();
+            txtTME.Text = P.TME.ToString();
+            txtTT.Text = (P.TME - P.TR).ToString();
+            txtTR.Text = (P.TR).ToString();
+            dgActual.DataSource = SetActual(LoteActual);
+        }
+
+        private void dgActual_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            PressKey((Keys)char.ToUpper(e.KeyChar));
+        }
+
+        private void PressKey(Keys K){
+            switch (K)
+            {
+                case Keys.I:
+                    if (timer1.Enabled)
+                    {
+                        LoteActual.Procesos.Enqueue(ProcesoActual);
+                        setActual();
+                        setData(ProcesoActual);
+                    }
+                    break;
+                case Keys.E:
+                    if (timer1.Enabled)
+                    {
+                        ProcesoActual.Resultado = "Error";
+                        ProcesoActual.TR = 0;
+                    }
+                    break;
+                case Keys.P:
+                    timer1.Stop();
+                    break;
+                case Keys.C:
+                    timer1.Start();
+                    break;
+            }
+        }
+
+        private void setActual()
+        {
+            ProcesoActual = LoteActual.Procesos.Dequeue();
+            ProcesoActual.NL = NL;
         }
     }
 }

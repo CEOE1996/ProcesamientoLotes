@@ -48,8 +48,8 @@ namespace SeminarioSO
 
             for (i = 0; i < txtProcesos.Value; i++)
             {
-                N1 = R.Next(100);
-                N2 = R.Next(100);
+                N1 = R.Next(1, 100);
+                N2 = R.Next(1, 100);
                 Op = (Operacion)R.Next(5);
 
                 switch (Op)

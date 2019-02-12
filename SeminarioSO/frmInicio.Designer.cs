@@ -40,9 +40,10 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Calibri", 24F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Red;
-            this.label1.Location = new System.Drawing.Point(48, 9);
+            this.label1.Location = new System.Drawing.Point(64, 11);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(334, 39);
+            this.label1.Size = new System.Drawing.Size(469, 55);
             this.label1.TabIndex = 0;
             this.label1.Text = "Procesamiento de Lotes";
             // 
@@ -50,26 +51,29 @@
             // 
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(12, 60);
+            this.label2.Location = new System.Drawing.Point(16, 74);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(159, 46);
+            this.label2.Size = new System.Drawing.Size(212, 57);
             this.label2.TabIndex = 1;
             this.label2.Text = "Introduce el Número de Procesos";
             // 
             // txtProcesos
             // 
             this.txtProcesos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProcesos.Location = new System.Drawing.Point(222, 69);
+            this.txtProcesos.Location = new System.Drawing.Point(296, 85);
+            this.txtProcesos.Margin = new System.Windows.Forms.Padding(4);
             this.txtProcesos.Name = "txtProcesos";
-            this.txtProcesos.Size = new System.Drawing.Size(200, 26);
+            this.txtProcesos.Size = new System.Drawing.Size(267, 33);
             this.txtProcesos.TabIndex = 2;
             // 
             // btnContinuar
             // 
             this.btnContinuar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnContinuar.Location = new System.Drawing.Point(161, 119);
+            this.btnContinuar.Location = new System.Drawing.Point(215, 146);
+            this.btnContinuar.Margin = new System.Windows.Forms.Padding(4);
             this.btnContinuar.Name = "btnContinuar";
-            this.btnContinuar.Size = new System.Drawing.Size(113, 30);
+            this.btnContinuar.Size = new System.Drawing.Size(151, 37);
             this.btnContinuar.TabIndex = 3;
             this.btnContinuar.Text = "Continuar";
             this.btnContinuar.UseVisualStyleBackColor = true;
@@ -77,13 +81,14 @@
             // 
             // frmInicio
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(434, 161);
+            this.ClientSize = new System.Drawing.Size(579, 198);
             this.Controls.Add(this.btnContinuar);
             this.Controls.Add(this.txtProcesos);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimizeBox = false;
             this.Name = "frmInicio";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

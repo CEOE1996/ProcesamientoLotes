@@ -45,7 +45,6 @@ namespace SeminarioSO
                 ProcesoActual = LoteActual.Procesos.Dequeue();
                 ProcesoActual.NL = NL;
                 dgActual.DataSource = Lotes;
-                txtNombre.Text = ProcesoActual.Nombre;
                 txtOp .Text = ProcesoActual.Operacion;
                 txtNumero.Text = ProcesoActual.Numero.ToString();
                 txtTME.Text = ProcesoActual.TME.ToString();
@@ -94,7 +93,7 @@ namespace SeminarioSO
 
             foreach(clsProceso P in L.Procesos)
             {
-                dt.Rows.Add(P.Nombre, P.TME);
+                dt.Rows.Add(P.TME);
             }
 
             return dt;
@@ -110,7 +109,7 @@ namespace SeminarioSO
 
             foreach (clsProceso P in L)
             {
-                dt.Rows.Add(P.NL, P.Nombre, P.Operacion, P.Resultado);
+                dt.Rows.Add(P.NL, P.Numero, P.Operacion, P.Resultado);
             }
 
             return dt;

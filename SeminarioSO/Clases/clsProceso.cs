@@ -8,19 +8,19 @@ namespace SeminarioSO.Clases
 {
     public class clsProceso
     {
-        public string Nombre;
         public string Operacion;
-        public decimal Resultado;
-        public int TME;
+        public string Resultado;
+        public int TME; //Tiempo Maximo Estimado
+        public int TR; //Tiempo Restante
         public int Numero;
         public int NL;
 
-        public clsProceso(String Nombre, string Operacion, decimal Resultado, int TME, int Numero)
+        public clsProceso(string Operacion, string Resultado, int TME, int Numero)
         {
-            this.Nombre = Nombre;
             this.Operacion = Operacion;
             this.Resultado = Resultado;
             this.TME = TME;
+            this.TR = TME;
             this.Numero = Numero;
             this.NL = 0;
         }

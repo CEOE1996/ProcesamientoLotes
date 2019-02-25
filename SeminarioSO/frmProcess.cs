@@ -28,15 +28,21 @@ namespace SeminarioSO
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if(ProcesoActual != null && ProcesoActual.TR > 0)
+            Procesar();
+        }
+
+        private void Procesar()
+        {
+            if (ProcesoActual != null && ProcesoActual.TR > 0)
             {
                 lblCounter.Text = (++Counter).ToString();
                 txtTR.Text = (--ProcesoActual.TR).ToString();
                 txtTT.Text = (ProcesoActual.TME - ProcesoActual.TR).ToString();
             }
-            else if(LoteActual.Procesos.Count > 0)
+            else if (LoteActual.Procesos.Count > 0)
             {
-                if (ProcesoActual != null) {
+                if (ProcesoActual != null)
+                {
                     Concluidos.Add(ProcesoActual);
                 }
 
@@ -48,7 +54,7 @@ namespace SeminarioSO
                     dgConcluidos.DataSource = SetConcluidos(Concluidos);
                 }
             }
-            else if(Lotes.Count > 0)
+            else if (Lotes.Count > 0)
             {
                 LoteActual = Lotes.Dequeue();
                 dgActual.DataSource = SetActual(LoteActual);
@@ -70,7 +76,7 @@ namespace SeminarioSO
                 MessageBox.Show("Se han concluido todos los procesos", "Concluido", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             lblCounterLote.Text = Lotes.Count.ToString();
-     
+
         }
 
         private DataTable SetActual(clsLote L)
@@ -135,6 +141,7 @@ namespace SeminarioSO
                     {
                         ProcesoActual.Resultado = "Error";
                         ProcesoActual.TR = 0;
+                        Procesar();
                     }
                     break;
                 case Keys.P:

@@ -29,6 +29,7 @@ namespace SeminarioSO.Clases
             this.TME = this.Servicio = TME;
             this.TR = TME;
             this.Numero = Numero;
+            this.Respuesta = -1;
         }
 
         public clsProceso()

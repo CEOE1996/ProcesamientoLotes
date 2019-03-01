@@ -107,7 +107,7 @@ namespace SeminarioSO
         {
             ProcesosBloqueados.Select(c => { c.Bloqueado++; return c; }).ToList();
 
-            if(ProcesosBloqueados.Count > 0 && ProcesosBloqueados.First().Bloqueado == 10)
+            if(ProcesosBloqueados.Count > 0 && ProcesosBloqueados.First().Bloqueado > 9)
             {
                 ProcesosListos.Enqueue(ProcesosBloqueados.Dequeue());
             }
@@ -187,7 +187,7 @@ namespace SeminarioSO
                     if (timer1.Enabled)
                     {
                         ProcesoActual.Resultado = "Error";
-                        ProcesoActual.Servicio = Counter;
+                        ProcesoActual.Servicio = ProcesoActual.TME - ProcesoActual.TR;
                         ProcesoActual.TR = 0;
                         Procesar();
                     }
@@ -208,9 +208,9 @@ namespace SeminarioSO
             if (ProcesosListos.Count > 0)
             {
                 ProcesoActual = ProcesosListos.Dequeue();
-                if(ProcesoActual.Respuesta == 0)
+                if(ProcesoActual.Respuesta == -1)
                 {
-                    ProcesoActual.Respuesta = Counter;
+                    ProcesoActual.Respuesta = Counter - ProcesoActual.Llegada;
                 }
             }
             else

@@ -23,8 +23,6 @@ namespace SeminarioSO
 
     public partial class frmInicio : Form
     {
-        const int MAX_LOTE = 3;
-
         public frmInicio()
         {
             InitializeComponent();
@@ -85,31 +83,14 @@ namespace SeminarioSO
                 ListProcesos.Enqueue(new clsProceso(
                                                         N1.ToString() + Signo + N2.ToString(),
                                                         Math.Round(Resultado, 4).ToString(),
-                                                        R.Next(10),
+                                                        R.Next(7, 18),
                                                         N++
                                                     ));
             }
 
             i = 0;
-            Queue<clsLote> ListLotes = new Queue<clsLote>();
-            Queue<clsProceso> Lote = new Queue<clsProceso>();
-            while (ListProcesos.Count > 0)
-            {
-                Lote.Enqueue(ListProcesos.Dequeue());
-                if (++i >= MAX_LOTE)
-                {
-                    i = 0;
-                    ListLotes.Enqueue(new clsLote(Lote));
-                    Lote = new Queue<clsProceso>();
-                }
-            }
 
-            if (Lote.Count > 0)
-            {
-                ListLotes.Enqueue(new clsLote(Lote));
-            }
-
-            frmProcess Ventana = new frmProcess(ListLotes);
+            frmProcess Ventana = new frmProcess(ListProcesos);
             this.Hide();
             Ventana.ShowDialog();
             this.Close();

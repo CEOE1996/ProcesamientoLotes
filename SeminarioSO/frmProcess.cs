@@ -13,15 +13,19 @@ namespace SeminarioSO
 {
     public partial class frmProcess : Form
     {
-        Queue<clsLote> Lotes = new Queue<clsLote>();
-        clsLote LoteActual = new clsLote();
-        clsProceso ProcesoActual;
-        List<clsProceso> Concluidos = new List<clsProceso>();
-        int Counter = 0, NL = 0;
+        const int MAX_PROCESOS = 3;
 
-        public frmProcess(Queue<clsLote> Lotes)
+        Queue<clsProceso> ProcesosNuevos = new Queue<clsProceso>();
+        Queue<clsProceso> ProcesosListos = new Queue<clsProceso>();
+        Queue<clsProceso> ProcesosBloqueados = new Queue<clsProceso>();
+        clsProceso ProcesoActual;
+
+        List<clsProceso> Concluidos = new List<clsProceso>();
+        int Counter = 0, CountProcesos = 0;
+
+        public frmProcess(Queue<clsProceso> Nuevos)
         {
-            this.Lotes = Lotes;
+            this.ProcesosNuevos = Nuevos;
             InitializeComponent();
             timer1.Start();
         }
@@ -33,62 +37,93 @@ namespace SeminarioSO
 
         private void Procesar()
         {
+            while(CountProcesos < MAX_PROCESOS && ProcesosNuevos.Count > 0)
+            {
+                clsProceso P = ProcesosNuevos.Dequeue();
+                P.Llegada = Counter;
+                ProcesosListos.Enqueue(P);
+                CountProcesos++;
+            }
+
             if (ProcesoActual != null && ProcesoActual.TR > 0)
             {
                 lblCounter.Text = (++Counter).ToString();
                 txtTR.Text = (--ProcesoActual.TR).ToString();
                 txtTT.Text = (ProcesoActual.TME - ProcesoActual.TR).ToString();
             }
-            else if (LoteActual.Procesos.Count > 0)
+            else if (ProcesosListos.Count > 0)
             {
-                if (ProcesoActual != null)
-                {
-                    Concluidos.Add(ProcesoActual);
-                }
-
+                AddConcluido();
                 setActual();
-                setData(ProcesoActual);
-
-                if (Concluidos.Count > 0)
-                {
-                    dgConcluidos.DataSource = SetConcluidos(Concluidos);
-                }
             }
-            else if (Lotes.Count > 0)
+            else if(ProcesosNuevos.Count == 0 && ProcesosBloqueados.Count == 0)
             {
-                LoteActual = Lotes.Dequeue();
-                dgActual.DataSource = SetActual(LoteActual);
-                if (Concluidos.Count > 0)
-                {
-                    dgConcluidos.DataSource = SetConcluidos(Concluidos);
-                }
-
-                NL++;
+                AddConcluido();
+                timer1.Stop();
+                frmConcluido Ventana = new frmConcluido(Concluidos);
+                MessageBox.Show("Se han concluido todos los procesos", "Concluido", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Hide();
+                Ventana.ShowDialog();
+                this.Close();
             }
             else
             {
-                if (ProcesoActual != null)
-                {
-                    Concluidos.Add(ProcesoActual);
-                    dgConcluidos.DataSource = SetConcluidos(Concluidos);
-                }
-                timer1.Stop();
-                MessageBox.Show("Se han concluido todos los procesos", "Concluido", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                lblCounter.Text = (++Counter).ToString();
             }
-            lblCounterLote.Text = Lotes.Count.ToString();
 
+            lblCounterLote.Text = ProcesosNuevos.Count.ToString();
+            setData(ProcesoActual);
+            ProcessBloqueados();
         }
 
-        private DataTable SetActual(clsLote L)
+        private DataTable SetActual(Queue<clsProceso> L)
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("ID");
             dt.Columns.Add("TME");
             dt.Columns.Add("TR");
 
-            foreach (clsProceso P in L.Procesos)
+            foreach (clsProceso P in L)
             {
                 dt.Rows.Add(P.Numero, P.TME, P.TR);
+            }
+
+            return dt;
+        }
+
+        private void AddConcluido()
+        {
+            if (ProcesoActual == null)
+            {
+                return;
+            }
+
+            ProcesoActual.Finalizacion = Counter;
+            Concluidos.Add(ProcesoActual);
+            CountProcesos--;
+        }
+
+        private void ProcessBloqueados()
+        {
+            ProcesosBloqueados.Select(c => { c.Bloqueado++; return c; }).ToList();
+
+            if(ProcesosBloqueados.Count > 0 && ProcesosBloqueados.First().Bloqueado > 9)
+            {
+                ProcesosListos.Enqueue(ProcesosBloqueados.Dequeue());
+            }
+
+            dgBloqueados.DataSource = SetBloqueados(ProcesosBloqueados);
+        }
+
+        private DataTable SetBloqueados(Queue<clsProceso> L)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ID");
+            dt.Columns.Add("Bloqueado");
+
+            foreach (clsProceso P in L)
+            {
+                dt.Rows.Add(P.Numero, P.Bloqueado);
             }
 
             return dt;
@@ -97,14 +132,13 @@ namespace SeminarioSO
         private DataTable SetConcluidos(List<clsProceso> L)
         {
             DataTable dt = new DataTable();
-            dt.Columns.Add("Lote");
             dt.Columns.Add("ID");
             dt.Columns.Add("Operacion");
             dt.Columns.Add("Resultado");
 
             foreach (clsProceso P in L)
             {
-                dt.Rows.Add(P.NL, P.Numero, P.Operacion, P.Resultado);
+                dt.Rows.Add(P.Numero, P.Operacion, P.Resultado);
             }
 
             return dt;
@@ -112,12 +146,24 @@ namespace SeminarioSO
 
         private void setData(clsProceso P)
         {
-            txtOp.Text = P.Operacion;
-            txtNumero.Text = P.Numero.ToString();
-            txtTME.Text = P.TME.ToString();
-            txtTT.Text = (P.TME - P.TR).ToString();
-            txtTR.Text = (P.TR).ToString();
-            dgActual.DataSource = SetActual(LoteActual);
+            if (P != null)
+            {
+                txtOp.Text = P.Operacion;
+                txtNumero.Text = P.Numero.ToString();
+                txtTME.Text = P.TME.ToString();
+                txtTT.Text = (P.TME - P.TR).ToString();
+                txtTR.Text = (P.TR).ToString();
+            }
+            else
+            {
+                txtOp.Text = "";
+                txtNumero.Text = "";
+                txtTME.Text = "";
+                txtTT.Text = "";
+                txtTR.Text = "";
+            }
+            dgActual.DataSource = SetActual(ProcesosListos);
+            dgConcluidos.DataSource = SetConcluidos(Concluidos);
         }
 
         private void dgActual_KeyPress(object sender, KeyPressEventArgs e)
@@ -131,7 +177,8 @@ namespace SeminarioSO
                 case Keys.I:
                     if (timer1.Enabled)
                     {
-                        LoteActual.Procesos.Enqueue(ProcesoActual);
+                        ProcesoActual.Bloqueado = 0;
+                        ProcesosBloqueados.Enqueue(ProcesoActual);
                         setActual();
                         setData(ProcesoActual);
                     }
@@ -140,23 +187,36 @@ namespace SeminarioSO
                     if (timer1.Enabled)
                     {
                         ProcesoActual.Resultado = "Error";
+                        ProcesoActual.Servicio = ProcesoActual.TME - ProcesoActual.TR;
                         ProcesoActual.TR = 0;
                         Procesar();
                     }
                     break;
                 case Keys.P:
                     timer1.Stop();
+                    lblTitle.Text = "Procesos en Pausa";
                     break;
                 case Keys.C:
                     timer1.Start();
+                    lblTitle.Text = "Procesos en Ejecución";
                     break;
             }
         }
 
         private void setActual()
         {
-            ProcesoActual = LoteActual.Procesos.Dequeue();
-            ProcesoActual.NL = NL;
+            if (ProcesosListos.Count > 0)
+            {
+                ProcesoActual = ProcesosListos.Dequeue();
+                if(ProcesoActual.Respuesta == -1)
+                {
+                    ProcesoActual.Respuesta = Counter - ProcesoActual.Llegada;
+                }
+            }
+            else
+            {
+                ProcesoActual = null;
+            }
         }
     }
 }

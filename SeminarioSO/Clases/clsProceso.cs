@@ -13,16 +13,23 @@ namespace SeminarioSO.Clases
         public int TME; //Tiempo Maximo Estimado
         public int TR; //Tiempo Restante
         public int Numero;
-        public int NL;
+
+        public int Llegada;
+        public int Finalizacion;
+        public int Retorno { get { return this.Finalizacion - this.Llegada; } }
+        public int Respuesta;
+        public int Espera { get { return this.Retorno - this.Servicio; } }
+        public int Servicio;
+        public int Bloqueado;
 
         public clsProceso(string Operacion, string Resultado, int TME, int Numero)
         {
             this.Operacion = Operacion;
             this.Resultado = Resultado;
-            this.TME = TME;
+            this.TME = this.Servicio = TME;
             this.TR = TME;
             this.Numero = Numero;
-            this.NL = 0;
+            this.Respuesta = -1;
         }
 
         public clsProceso()

@@ -64,8 +64,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Clases\clsLote.cs" />
     <Compile Include="Clases\clsProceso.cs" />
+    <Compile Include="frmConcluido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmConcluido.Designer.cs">
+      <DependentUpon>frmConcluido.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmInicio.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,6 +85,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmConcluido.resx">
+      <DependentUpon>frmConcluido.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmInicio.resx">
       <DependentUpon>frmInicio.cs</DependentUpon>
     </EmbeddedResource>

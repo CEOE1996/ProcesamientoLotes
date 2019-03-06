@@ -22,6 +22,7 @@ namespace SeminarioSO
 
         List<clsProceso> Concluidos = new List<clsProceso>();
         int Counter = 0, CountProcesos = 0;
+        Random R = new Random();
 
         public frmProcess(Queue<clsProceso> Nuevos)
         {
@@ -200,6 +201,14 @@ namespace SeminarioSO
                     timer1.Start();
                     lblTitle.Text = "Procesos en Ejecución";
                     break;
+                case Keys.N:
+                    if (timer1.Enabled)
+                    {
+                        ProcesosNuevos.Enqueue(new clsProceso(R));
+                        Procesar();
+                    }
+                    break;
+
             }
         }
 

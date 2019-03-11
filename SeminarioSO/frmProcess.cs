@@ -208,6 +208,29 @@ namespace SeminarioSO
                         Procesar();
                     }
                     break;
+                case Keys.T:
+                    if (timer1.Enabled)
+                    {
+                        timer1.Stop();
+                        List<clsProceso> BCP = Concluidos;
+                        if (ProcesoActual != null)
+                        {
+                            ProcesoActual.Finalizacion = Counter;
+                            Concluidos.Add(ProcesoActual);
+                        }
+
+                        BCP.AddRange(ProcesosListos.Union(ProcesosNuevos).Union(ProcesosBloqueados).Select(c => {
+                                                                                                                    c.Finalizacion = Counter;
+                                                                                                                    c.Resultado = "En Proceso";
+                                                                                                                    return c;
+                                                                                                                }).ToList());
+                        frmConcluido Ventana = new frmConcluido(BCP);
+                        this.Hide();
+                        Ventana.ShowDialog();
+                        this.Show();
+                        timer1.Start();
+                    }
+                    break;
 
             }
         }

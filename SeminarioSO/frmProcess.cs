@@ -61,7 +61,7 @@ namespace SeminarioSO
             {
                 AddConcluido();
                 timer1.Stop();
-                frmConcluido Ventana = new frmConcluido(Concluidos);
+                frmConcluido Ventana = new frmConcluido(Counter, Concluidos);
                 MessageBox.Show("Se han concluido todos los procesos", "Concluido", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
                 Ventana.ShowDialog();
@@ -100,6 +100,7 @@ namespace SeminarioSO
             }
 
             ProcesoActual.Finalizacion = Counter;
+            ProcesoActual.Concluido = true;
             Concluidos.Add(ProcesoActual);
             CountProcesos--;
         }
@@ -188,7 +189,6 @@ namespace SeminarioSO
                     if (timer1.Enabled)
                     {
                         ProcesoActual.Resultado = "Error";
-                        ProcesoActual.Servicio = ProcesoActual.TME - ProcesoActual.TR;
                         ProcesoActual.TR = 0;
                         Procesar();
                     }
@@ -212,19 +212,26 @@ namespace SeminarioSO
                     if (timer1.Enabled)
                     {
                         timer1.Stop();
-                        List<clsProceso> BCP = Concluidos;
+                        List<clsProceso> BCP = new List<clsProceso>();
+                        BCP.AddRange(Concluidos);
+
                         if (ProcesoActual != null)
                         {
-                            ProcesoActual.Finalizacion = Counter;
-                            Concluidos.Add(ProcesoActual);
+                            BCP.Add(ProcesoActual);
                         }
 
-                        BCP.AddRange(ProcesosListos.Union(ProcesosNuevos).Union(ProcesosBloqueados).Select(c => {
-                                                                                                                    c.Finalizacion = Counter;
-                                                                                                                    c.Resultado = "En Proceso";
-                                                                                                                    return c;
-                                                                                                                }).ToList());
-                        frmConcluido Ventana = new frmConcluido(BCP);
+                        BCP.AddRange(ProcesosListos);
+                        BCP.AddRange(ProcesosBloqueados);
+                        BCP.AddRange(ProcesosNuevos);
+
+                        foreach (clsProceso p in BCP) {
+                            if (!p.Concluido)
+                            {
+                                p.Finalizacion = Counter;
+                            }
+                        }
+
+                        frmConcluido Ventana = new frmConcluido(Counter, BCP, false);
                         this.Hide();
                         Ventana.ShowDialog();
                         this.Show();

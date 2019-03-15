@@ -14,11 +14,14 @@ namespace SeminarioSO
     public partial class frmConcluido : Form
     {
         List<clsProceso> ListProcesos = new List<clsProceso>();
+        bool Finish;
 
-        public frmConcluido(List<clsProceso> L)
+        public frmConcluido(int c, List<clsProceso> L, bool Finish = true)
         {
             this.ListProcesos = L;
+            this.Finish = Finish;
             InitializeComponent();
+            lblCounter.Text = c.ToString();
             FillGrid();
         }
 
@@ -35,10 +38,33 @@ namespace SeminarioSO
             dt.Columns.Add("Respuesta");
             dt.Columns.Add("Espera");
             dt.Columns.Add("Servicio");
+            if(!Finish)
+            {
+                dt.Columns.Add("Bloqueado");
+            }
 
             foreach (clsProceso P in ListProcesos)
             {
-                dt.Rows.Add(P.Numero, P.Operacion, P.Resultado, P.TME, P.Llegada, P.Finalizacion, P.Retorno, P.Respuesta, P.Espera, P.Servicio);
+                if (Finish)
+                {
+                    dt.Rows.Add(P.Numero, P.Operacion, P.Resultado, P.TME, P.Llegada, P.Finalizacion, P.Retorno, P.Respuesta, P.Espera, P.Servicio);
+                }
+                else if (P.Concluido)
+                {
+                    dt.Rows.Add(P.Numero, P.Operacion, P.Resultado, P.TME, P.Llegada, P.Finalizacion, P.Retorno, P.Respuesta, P.Espera, P.Servicio, 10 - P.Bloqueado);
+                }
+                else if (P.Llegada == -1)
+                {
+                    dt.Rows.Add(P.Numero, P.Operacion, "", P.TME, "", "", "", "", "", "", "");
+                }
+                else if (P.Bloqueado > 0)
+                {
+                    dt.Rows.Add(P.Numero, P.Operacion, "", P.TME, P.Llegada, "", "", P.Respuesta, P.Espera, P.Servicio, 10 - P.Bloqueado);
+                }
+                else
+                {
+                    dt.Rows.Add(P.Numero, P.Operacion, "", P.TME, P.Llegada, "", "", P.Respuesta, P.Espera, P.Servicio, P.Bloqueado);
+                }
             }
 
             dgConcluidos.DataSource = dt;

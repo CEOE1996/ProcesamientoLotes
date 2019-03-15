@@ -30,7 +30,7 @@ namespace SeminarioSO.Clases
         public int Retorno { get { return this.Finalizacion - this.Llegada; } }
         public int Respuesta;
         public int Espera { get { return this.Retorno - this.Servicio; } }
-        public int Servicio { get { return this.TME - this.TR; } }
+        public int Servicio;
         public int Bloqueado;
 
         private static int ID;
@@ -39,7 +39,7 @@ namespace SeminarioSO.Clases
         {
             this.Operacion = Operacion;
             this.Resultado = Resultado;
-            this.TME = TME;
+            this.TME = this.Servicio = TME;
             this.TR = TME;
             this.Numero = Numero;
             this.Respuesta = -1;
@@ -88,7 +88,7 @@ namespace SeminarioSO.Clases
 
             this.Operacion = N1.ToString() + Signo + N2.ToString();
             this.Resultado = Math.Round(Resultado, 4).ToString();
-            this.TME = this.TR = R.Next(7, 18);
+            this.TME = this.TR = this.Servicio = R.Next(7, 18);
             
             this.Numero = ++ID;
             this.Respuesta = -1;
@@ -108,6 +108,7 @@ namespace SeminarioSO.Clases
             this.Llegada = p.Llegada;
             this.Finalizacion = p.Finalizacion;
             this.Respuesta = p.Respuesta;
+            this.Servicio = p.Servicio;
             this.Bloqueado = p.Bloqueado;
         }
 

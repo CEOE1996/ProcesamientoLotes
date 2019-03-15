@@ -57,13 +57,9 @@ namespace SeminarioSO
                 {
                     dt.Rows.Add(P.Numero, P.Operacion, "", P.TME, "", "", "", "", "", "", "");
                 }
-                else if (P.Bloqueado > 0)
+                else 
                 {
-                    dt.Rows.Add(P.Numero, P.Operacion, "", P.TME, P.Llegada, "", "", P.Respuesta, P.Espera, P.Servicio, 10 - P.Bloqueado);
-                }
-                else
-                {
-                    dt.Rows.Add(P.Numero, P.Operacion, "", P.TME, P.Llegada, "", "", P.Respuesta, P.Espera, P.Servicio, P.Bloqueado);
+                    dt.Rows.Add(P.Numero, P.Operacion, "", P.TME, P.Llegada, "", "", P.Respuesta == -1 ? "" : P.Respuesta.ToString(), P.Espera, P.Servicio, P.Bloqueado > 0 ? 10 - P.Bloqueado: P.Bloqueado);
                 }
             }
 

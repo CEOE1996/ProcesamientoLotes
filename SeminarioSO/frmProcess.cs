@@ -189,6 +189,7 @@ namespace SeminarioSO
                     if (timer1.Enabled)
                     {
                         ProcesoActual.Resultado = "Error";
+                        ProcesoActual.Servicio = ProcesoActual.TME - ProcesoActual.TR;
                         ProcesoActual.TR = 0;
                         Procesar();
                     }
@@ -228,6 +229,7 @@ namespace SeminarioSO
                             if (!p.Concluido)
                             {
                                 p.Finalizacion = Counter;
+                                p.Servicio = p.TME - p.TR;
                             }
                         }
 
@@ -235,6 +237,7 @@ namespace SeminarioSO
                         this.Hide();
                         Ventana.ShowDialog();
                         this.Show();
+                        dgActual.Focus();
                         timer1.Start();
                     }
                     break;

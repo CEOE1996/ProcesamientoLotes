@@ -12,14 +12,6 @@ using SeminarioSO.Clases;
 
 namespace SeminarioSO
 {
-    public enum Operacion
-    {
-        Suma,
-        Resta,
-        Multiplicacion,
-        Division,
-        Residuo
-    }
 
     public partial class frmInicio : Form
     {
@@ -37,58 +29,13 @@ namespace SeminarioSO
                 return;
             }
 
-            Random R = new Random();
-            int N = 1, i = 0;
-            decimal N1, N2, Resultado;
-            char Signo;
-            Operacion Op;
             Queue<clsProceso> ListProcesos = new Queue<clsProceso>();
+            Random R = new Random();
 
-            for (i = 0; i < txtProcesos.Value; i++)
+            for (int i = 0; i < txtProcesos.Value; i++)
             {
-                N1 = R.Next(1, 100);
-                N2 = R.Next(1, 100);
-                Op = (Operacion)R.Next(5);
-
-                switch (Op)
-                {
-                    case Operacion.Suma:
-                        Signo = '+';
-                        Resultado = N1 + N2;
-                        break;
-
-                    case Operacion.Resta:
-                        Signo = '-';
-                        Resultado = N1 - N2;
-                        break;
-
-                    case Operacion.Multiplicacion:
-                        Signo = '*';
-                        Resultado = N1 * N2;
-                        break;
-                    case Operacion.Division:
-                        Signo = '/';
-                        Resultado = N1 / N2;
-                        break;
-                    case Operacion.Residuo:
-                        Signo = '%';
-                        Resultado = N1 % N2;
-                        break;
-                    default:
-                        Signo = '?';
-                        Resultado = 0;
-                        break;
-                }
-
-                ListProcesos.Enqueue(new clsProceso(
-                                                        N1.ToString() + Signo + N2.ToString(),
-                                                        Math.Round(Resultado, 4).ToString(),
-                                                        R.Next(7, 18),
-                                                        N++
-                                                    ));
+                ListProcesos.Enqueue(new clsProceso(R));
             }
-
-            i = 0;
 
             frmProcess Ventana = new frmProcess(ListProcesos);
             this.Hide();

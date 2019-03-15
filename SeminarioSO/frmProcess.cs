@@ -22,6 +22,7 @@ namespace SeminarioSO
 
         List<clsProceso> Concluidos = new List<clsProceso>();
         int Counter = 0, CountProcesos = 0;
+        Random R = new Random();
 
         public frmProcess(Queue<clsProceso> Nuevos)
         {
@@ -60,7 +61,7 @@ namespace SeminarioSO
             {
                 AddConcluido();
                 timer1.Stop();
-                frmConcluido Ventana = new frmConcluido(Concluidos);
+                frmConcluido Ventana = new frmConcluido(Counter, Concluidos);
                 MessageBox.Show("Se han concluido todos los procesos", "Concluido", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Hide();
                 Ventana.ShowDialog();
@@ -99,6 +100,7 @@ namespace SeminarioSO
             }
 
             ProcesoActual.Finalizacion = Counter;
+            ProcesoActual.Concluido = true;
             Concluidos.Add(ProcesoActual);
             CountProcesos--;
         }
@@ -200,6 +202,46 @@ namespace SeminarioSO
                     timer1.Start();
                     lblTitle.Text = "Procesos en Ejecución";
                     break;
+                case Keys.N:
+                    if (timer1.Enabled)
+                    {
+                        ProcesosNuevos.Enqueue(new clsProceso(R));
+                        Procesar();
+                    }
+                    break;
+                case Keys.T:
+                    if (timer1.Enabled)
+                    {
+                        timer1.Stop();
+                        List<clsProceso> BCP = new List<clsProceso>();
+                        BCP.AddRange(Concluidos);
+
+                        if (ProcesoActual != null)
+                        {
+                            BCP.Add(ProcesoActual);
+                        }
+
+                        BCP.AddRange(ProcesosListos);
+                        BCP.AddRange(ProcesosBloqueados);
+                        BCP.AddRange(ProcesosNuevos);
+
+                        foreach (clsProceso p in BCP) {
+                            if (!p.Concluido)
+                            {
+                                p.Finalizacion = Counter;
+                                p.Servicio = p.TME - p.TR;
+                            }
+                        }
+
+                        frmConcluido Ventana = new frmConcluido(Counter, BCP, false);
+                        this.Hide();
+                        Ventana.ShowDialog();
+                        this.Show();
+                        dgActual.Focus();
+                        timer1.Start();
+                    }
+                    break;
+
             }
         }
 

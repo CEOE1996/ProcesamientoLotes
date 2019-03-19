@@ -29,6 +29,13 @@ namespace SeminarioSO
                 return;
             }
 
+            if (txtQuantum.Value <= 0)
+            {
+                MessageBox.Show("Valor de Quantum Inválido", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+
             Queue<clsProceso> ListProcesos = new Queue<clsProceso>();
             Random R = new Random();
 
@@ -37,7 +44,7 @@ namespace SeminarioSO
                 ListProcesos.Enqueue(new clsProceso(R));
             }
 
-            frmProcess Ventana = new frmProcess(ListProcesos);
+            frmProcess Ventana = new frmProcess(ListProcesos, Int32.Parse(txtQuantum.Value.ToString()));
             this.Hide();
             Ventana.ShowDialog();
             this.Close();

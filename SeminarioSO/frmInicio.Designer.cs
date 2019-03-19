@@ -32,7 +32,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtProcesos = new System.Windows.Forms.NumericUpDown();
             this.btnContinuar = new System.Windows.Forms.Button();
+            this.txtQuantum = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.txtProcesos)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtQuantum)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -65,25 +68,47 @@
             this.txtProcesos.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtProcesos.Name = "txtProcesos";
             this.txtProcesos.Size = new System.Drawing.Size(300, 35);
-            this.txtProcesos.TabIndex = 2;
+            this.txtProcesos.TabIndex = 0;
             // 
             // btnContinuar
             // 
             this.btnContinuar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnContinuar.Location = new System.Drawing.Point(242, 182);
+            this.btnContinuar.Location = new System.Drawing.Point(240, 249);
             this.btnContinuar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnContinuar.Name = "btnContinuar";
             this.btnContinuar.Size = new System.Drawing.Size(170, 46);
-            this.btnContinuar.TabIndex = 3;
+            this.btnContinuar.TabIndex = 2;
             this.btnContinuar.Text = "Continuar";
             this.btnContinuar.UseVisualStyleBackColor = true;
             this.btnContinuar.Click += new System.EventHandler(this.btnContinuar_Click);
+            // 
+            // txtQuantum
+            // 
+            this.txtQuantum.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtQuantum.Location = new System.Drawing.Point(333, 177);
+            this.txtQuantum.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.txtQuantum.Name = "txtQuantum";
+            this.txtQuantum.Size = new System.Drawing.Size(300, 35);
+            this.txtQuantum.TabIndex = 1;
+            // 
+            // label3
+            // 
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.Black;
+            this.label3.Location = new System.Drawing.Point(18, 163);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(238, 71);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Introduce el Valor del Quantum";
             // 
             // frmInicio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(651, 248);
+            this.ClientSize = new System.Drawing.Size(651, 322);
+            this.Controls.Add(this.txtQuantum);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.btnContinuar);
             this.Controls.Add(this.txtProcesos);
             this.Controls.Add(this.label2);
@@ -94,6 +119,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.txtProcesos)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtQuantum)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -105,6 +131,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown txtProcesos;
         private System.Windows.Forms.Button btnContinuar;
+        private System.Windows.Forms.NumericUpDown txtQuantum;
+        private System.Windows.Forms.Label label3;
     }
 }
 

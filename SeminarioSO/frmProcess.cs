@@ -84,7 +84,6 @@ namespace SeminarioSO
             {
                 ProcesosListos.Enqueue(ProcesoActual);
                 setActual();
-                Quantum = 0;
             }
         }
 
@@ -114,7 +113,6 @@ namespace SeminarioSO
             ProcesoActual.Concluido = true;
             Concluidos.Add(ProcesoActual);
             CountProcesos--;
-            Quantum = 0;
         }
 
         private void ProcessBloqueados()
@@ -268,6 +266,7 @@ namespace SeminarioSO
                 {
                     ProcesoActual.Respuesta = Counter - ProcesoActual.Llegada;
                 }
+                Quantum = 0;
             }
             else
             {

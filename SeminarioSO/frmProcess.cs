@@ -14,6 +14,7 @@ namespace SeminarioSO
     public partial class frmProcess : Form
     {
         const int MAX_PROCESOS = 3;
+        int MAX_QUANTUM;
 
         Queue<clsProceso> ProcesosNuevos = new Queue<clsProceso>();
         Queue<clsProceso> ProcesosListos = new Queue<clsProceso>();
@@ -21,14 +22,16 @@ namespace SeminarioSO
         clsProceso ProcesoActual;
 
         List<clsProceso> Concluidos = new List<clsProceso>();
-        int Counter = 0, CountProcesos = 0;
+        int Counter = 0, CountProcesos = 0, Quantum = 0;
         Random R = new Random();
 
-        public frmProcess(Queue<clsProceso> Nuevos)
+        public frmProcess(Queue<clsProceso> Nuevos, int Quantum)
         {
             this.ProcesosNuevos = Nuevos;
+            MAX_QUANTUM = Quantum;
             InitializeComponent();
             timer1.Start();
+            lblMaxQuantum.Text = Quantum.ToString();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -51,6 +54,7 @@ namespace SeminarioSO
                 lblCounter.Text = (++Counter).ToString();
                 txtTR.Text = (--ProcesoActual.TR).ToString();
                 txtTT.Text = (ProcesoActual.TME - ProcesoActual.TR).ToString();
+                lblQuantum.Text = (++Quantum).ToString();
             }
             else if (ProcesosListos.Count > 0)
             {
@@ -75,9 +79,15 @@ namespace SeminarioSO
             lblCounterLote.Text = ProcesosNuevos.Count.ToString();
             setData(ProcesoActual);
             ProcessBloqueados();
+
+            if(Quantum >= MAX_QUANTUM)
+            {
+                ProcesosListos.Enqueue(ProcesoActual);
+                setActual();
+            }
         }
 
-        private DataTable SetActual(Queue<clsProceso> L)
+        private DataTable SetListos(Queue<clsProceso> L)
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("ID");
@@ -155,6 +165,7 @@ namespace SeminarioSO
                 txtTME.Text = P.TME.ToString();
                 txtTT.Text = (P.TME - P.TR).ToString();
                 txtTR.Text = (P.TR).ToString();
+                lblQuantum.Text = Quantum.ToString();
             }
             else
             {
@@ -163,8 +174,9 @@ namespace SeminarioSO
                 txtTME.Text = "";
                 txtTT.Text = "";
                 txtTR.Text = "";
+                lblQuantum.Text = "";
             }
-            dgActual.DataSource = SetActual(ProcesosListos);
+            dgActual.DataSource = SetListos(ProcesosListos);
             dgConcluidos.DataSource = SetConcluidos(Concluidos);
         }
 
@@ -254,6 +266,7 @@ namespace SeminarioSO
                 {
                     ProcesoActual.Respuesta = Counter - ProcesoActual.Llegada;
                 }
+                Quantum = 0;
             }
             else
             {

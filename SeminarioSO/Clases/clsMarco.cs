@@ -16,7 +16,7 @@ namespace SeminarioSO.Clases
         public clsMarco(int ID, int MemorySize)
         {
             this.ID = ID;
-            this.Proceso = -1;
+            this.Proceso = 0;
             this.Estatus = 0;
             this.Memoria = new bool[MemorySize];
 

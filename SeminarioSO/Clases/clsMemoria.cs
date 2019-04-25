@@ -15,7 +15,7 @@ namespace SeminarioSO.Clases
         Bloqueado = 3
     }
 
-    class clsMemoria
+    public class clsMemoria
     {
         public List<clsMarco> Marcos;
         public int Size;
@@ -25,6 +25,7 @@ namespace SeminarioSO.Clases
         {
             this.Size = Size;
             this.SizeMarco = SizeMarco;
+            this.Marcos = new List<clsMarco>();
 
             for(int i = 0; i < Size; i++)
                 Marcos.Add(new clsMarco(i, SizeMarco));
@@ -35,9 +36,19 @@ namespace SeminarioSO.Clases
             return Marcos.Where(c => c.Estatus == (int)Estatus.Disponible).Count();
         }
 
+        public bool canAccess(int TME)
+        {
+            if (getDisponible() < TME / (double)SizeMarco)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public void addProcess(clsProceso P)
         {
-            if(getDisponible() < P.TME / SizeMarco)
+            if(!canAccess(P.TME))
             {
                 return;
             }

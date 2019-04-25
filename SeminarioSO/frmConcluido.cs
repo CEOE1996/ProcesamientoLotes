@@ -65,5 +65,11 @@ namespace SeminarioSO
 
             dgConcluidos.DataSource = dt;
         }
+
+        private void dgConcluidos_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((Keys)char.ToUpper(e.KeyChar) == Keys.C)
+                this.Close();
+        }
     }
 }

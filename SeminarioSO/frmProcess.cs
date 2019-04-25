@@ -15,11 +15,15 @@ namespace SeminarioSO
     {
         const int MAX_PROCESOS = 3;
         int MAX_QUANTUM;
+        const int MAX_MEMORY = 35;
+        const int MAX_MARCO = 4;
+        const int SIZE_SO = 12;
 
         Queue<clsProceso> ProcesosNuevos = new Queue<clsProceso>();
         Queue<clsProceso> ProcesosListos = new Queue<clsProceso>();
         Queue<clsProceso> ProcesosBloqueados = new Queue<clsProceso>();
         clsProceso ProcesoActual;
+        clsMemoria Memoria = new clsMemoria(MAX_MEMORY, MAX_MARCO);
 
         List<clsProceso> Concluidos = new List<clsProceso>();
         int Counter = 0, CountProcesos = 0, Quantum = 0;
@@ -30,6 +34,10 @@ namespace SeminarioSO
             this.ProcesosNuevos = Nuevos;
             MAX_QUANTUM = Quantum;
             InitializeComponent();
+            //Adding SO
+            Memoria.addProcess(new clsProceso("", "", SIZE_SO, -1));
+            Memoria.changeStatus(-1, -1);
+
             timer1.Start();
             lblMaxQuantum.Text = Quantum.ToString();
         }
@@ -38,14 +46,15 @@ namespace SeminarioSO
         {
             Procesar();
         }
-
+        
         private void Procesar()
         {
-            while(CountProcesos < MAX_PROCESOS && ProcesosNuevos.Count > 0)
+            while(ProcesosNuevos.Count > 0 && Memoria.canAccess(ProcesosNuevos.First().TME))
             {
                 clsProceso P = ProcesosNuevos.Dequeue();
                 P.Llegada = Counter;
                 ProcesosListos.Enqueue(P);
+                Memoria.addProcess(P);
                 CountProcesos++;
             }
 
@@ -83,6 +92,7 @@ namespace SeminarioSO
             if(Quantum >= MAX_QUANTUM)
             {
                 ProcesosListos.Enqueue(ProcesoActual);
+                Memoria.changeStatus(ProcesoActual.Numero, 1);
                 setActual();
             }
         }
@@ -111,6 +121,7 @@ namespace SeminarioSO
 
             ProcesoActual.Finalizacion = Counter;
             ProcesoActual.Concluido = true;
+            Memoria.removeProcess(ProcesoActual.Numero);
             Concluidos.Add(ProcesoActual);
             CountProcesos--;
         }
@@ -121,7 +132,9 @@ namespace SeminarioSO
 
             if(ProcesosBloqueados.Count > 0 && ProcesosBloqueados.First().Bloqueado > 9)
             {
-                ProcesosListos.Enqueue(ProcesosBloqueados.Dequeue());
+                clsProceso Unblock = ProcesosBloqueados.Dequeue();
+                ProcesosListos.Enqueue(Unblock);
+                Memoria.changeStatus(Unblock.Numero, 1);
             }
 
             dgBloqueados.DataSource = SetBloqueados(ProcesosBloqueados);
@@ -188,16 +201,17 @@ namespace SeminarioSO
         private void PressKey(Keys K){
             switch (K)
             {
-                case Keys.I:
+                case Keys.E: //Interrupcion
                     if (timer1.Enabled)
                     {
                         ProcesoActual.Bloqueado = 0;
                         ProcesosBloqueados.Enqueue(ProcesoActual);
+                        Memoria.changeStatus(ProcesoActual.Numero, 3);
                         setActual();
                         setData(ProcesoActual);
                     }
                     break;
-                case Keys.E:
+                case Keys.W: //Error
                     if (timer1.Enabled)
                     {
                         ProcesoActual.Resultado = "Error";
@@ -206,22 +220,22 @@ namespace SeminarioSO
                         Procesar();
                     }
                     break;
-                case Keys.P:
+                case Keys.P: //Pausa
                     timer1.Stop();
                     lblTitle.Text = "Procesos en Pausa";
                     break;
-                case Keys.C:
+                case Keys.C: //Continuar
                     timer1.Start();
                     lblTitle.Text = "Procesos en Ejecución";
                     break;
-                case Keys.N:
+                case Keys.N: //Nuevo
                     if (timer1.Enabled)
                     {
                         ProcesosNuevos.Enqueue(new clsProceso(R));
                         Procesar();
                     }
                     break;
-                case Keys.T:
+                case Keys.B: //Tabla BCP
                     if (timer1.Enabled)
                     {
                         timer1.Stop();
@@ -253,7 +267,14 @@ namespace SeminarioSO
                         timer1.Start();
                     }
                     break;
-
+                case Keys.T: //Tabla paginas
+                    timer1.Stop();
+                    frmTablaPaginas Paginas = new frmTablaPaginas(Memoria);
+                    this.Hide();
+                    Paginas.ShowDialog();
+                    this.Show();
+                    timer1.Start();
+                    break;
             }
         }
 
@@ -262,6 +283,7 @@ namespace SeminarioSO
             if (ProcesosListos.Count > 0)
             {
                 ProcesoActual = ProcesosListos.Dequeue();
+                Memoria.changeStatus(ProcesoActual.Numero, 2);
                 if(ProcesoActual.Respuesta == -1)
                 {
                     ProcesoActual.Respuesta = Counter - ProcesoActual.Llegada;

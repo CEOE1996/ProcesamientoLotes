@@ -85,6 +85,12 @@
     <Compile Include="frmProcess.Designer.cs">
       <DependentUpon>frmProcess.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmTablaPaginas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTablaPaginas.Designer.cs">
+      <DependentUpon>frmTablaPaginas.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frmConcluido.resx">
@@ -95,6 +101,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmProcess.resx">
       <DependentUpon>frmProcess.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTablaPaginas.resx">
+      <DependentUpon>frmTablaPaginas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -64,6 +64,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Clases\clsMarco.cs" />
+    <Compile Include="Clases\clsMemoria.cs" />
     <Compile Include="Clases\clsProceso.cs" />
     <Compile Include="frmConcluido.cs">
       <SubType>Form</SubType>

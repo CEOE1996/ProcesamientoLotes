@@ -79,5 +79,14 @@ namespace SeminarioSO
         {
            DrawPages();
         }
+
+        private void frmTablaPaginas_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if((Keys)char.ToUpper(e.KeyChar) == Keys.C)
+            {
+                this.Close();
+            }
+
+        }
     }
 }

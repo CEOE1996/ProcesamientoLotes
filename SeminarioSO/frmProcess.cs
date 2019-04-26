@@ -74,11 +74,7 @@ namespace SeminarioSO
             {
                 AddConcluido();
                 timer1.Stop();
-                frmConcluido Ventana = new frmConcluido(Counter, Concluidos);
                 MessageBox.Show("Se han concluido todos los procesos", "Concluido", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Hide();
-                Ventana.ShowDialog();
-                this.Close();
             }
             else
             {

@@ -61,6 +61,7 @@
             this.Controls.Add(this.lblTitle);
             this.Name = "frmTablaPaginas";
             this.Text = "Tabla Paginas";
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmTablaPaginas_KeyPress);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -83,9 +83,10 @@ namespace SeminarioSO
 
             lblCounterLote.Text = ProcesosNuevos.Count.ToString();
             setData(ProcesoActual);
+            dgSiguiente.DataSource = SetSiguiente(ProcesosNuevos);
             ProcessBloqueados();
 
-            if(Quantum >= MAX_QUANTUM)
+            if (Quantum >= MAX_QUANTUM)
             {
                 ProcesosListos.Enqueue(ProcesoActual);
                 Memoria.changeStatus(ProcesoActual.Numero, 1);
@@ -103,6 +104,20 @@ namespace SeminarioSO
             foreach (clsProceso P in L)
             {
                 dt.Rows.Add(P.Numero, P.TME, P.TR);
+            }
+
+            return dt;
+        }
+
+        private DataTable SetSiguiente(Queue<clsProceso> L)
+        {
+            DataTable dt = new DataTable();
+            dt.Columns.Add("ID");
+            dt.Columns.Add("TME");
+
+            if(L.Count > 0)
+            {
+                dt.Rows.Add(L.First().Numero, L.First().TME);
             }
 
             return dt;

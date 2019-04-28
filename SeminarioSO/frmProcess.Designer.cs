@@ -61,12 +61,12 @@
             this.lblSuspendidos = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgSuspendidos = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgActual)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgConcluidos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBloqueados)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgSiguiente)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgSuspendidos)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -395,17 +395,17 @@
             this.label15.TabIndex = 36;
             this.label15.Text = "Suspendido Siguiente";
             // 
-            // dataGridView1
+            // dgSuspendidos
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(16, 443);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(240, 53);
-            this.dataGridView1.TabIndex = 35;
+            this.dgSuspendidos.AllowUserToAddRows = false;
+            this.dgSuspendidos.AllowUserToDeleteRows = false;
+            this.dgSuspendidos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dgSuspendidos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgSuspendidos.Location = new System.Drawing.Point(16, 443);
+            this.dgSuspendidos.Name = "dgSuspendidos";
+            this.dgSuspendidos.ReadOnly = true;
+            this.dgSuspendidos.Size = new System.Drawing.Size(240, 53);
+            this.dgSuspendidos.TabIndex = 35;
             // 
             // frmProcess
             // 
@@ -413,7 +413,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(842, 504);
             this.Controls.Add(this.label15);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgSuspendidos);
             this.Controls.Add(this.lblSuspendidos);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label1);
@@ -452,7 +452,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgConcluidos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBloqueados)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgSiguiente)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgSuspendidos)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -492,6 +492,6 @@
         private System.Windows.Forms.Label lblSuspendidos;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgSuspendidos;
     }
 }

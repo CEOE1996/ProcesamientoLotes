@@ -58,19 +58,25 @@
             this.label14 = new System.Windows.Forms.Label();
             this.dgSiguiente = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
+            this.lblSuspendidos = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dgActual)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgConcluidos)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBloqueados)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgSiguiente)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
             // 
+            this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(12, 60);
+            this.label2.Location = new System.Drawing.Point(12, 59);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(159, 27);
+            this.label2.Size = new System.Drawing.Size(136, 20);
             this.label2.TabIndex = 4;
             this.label2.Text = "Procesos Nuevos:";
             // 
@@ -89,27 +95,28 @@
             // 
             this.lblCounterLote.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCounterLote.ForeColor = System.Drawing.Color.Black;
-            this.lblCounterLote.Location = new System.Drawing.Point(169, 56);
+            this.lblCounterLote.Location = new System.Drawing.Point(154, 59);
             this.lblCounterLote.Name = "lblCounterLote";
-            this.lblCounterLote.Size = new System.Drawing.Size(98, 27);
+            this.lblCounterLote.Size = new System.Drawing.Size(74, 20);
             this.lblCounterLote.TabIndex = 5;
             // 
             // lblCounter
             // 
             this.lblCounter.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCounter.ForeColor = System.Drawing.Color.Black;
-            this.lblCounter.Location = new System.Drawing.Point(699, 56);
+            this.lblCounter.Location = new System.Drawing.Point(756, 59);
             this.lblCounter.Name = "lblCounter";
-            this.lblCounter.Size = new System.Drawing.Size(129, 27);
+            this.lblCounter.Size = new System.Drawing.Size(74, 20);
             this.lblCounter.TabIndex = 7;
             // 
             // label4
             // 
+            this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(576, 60);
+            this.label4.Location = new System.Drawing.Point(669, 59);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(109, 27);
+            this.label4.Size = new System.Drawing.Size(79, 20);
             this.label4.TabIndex = 6;
             this.label4.Text = "Contador:";
             // 
@@ -122,7 +129,7 @@
             this.dgActual.Location = new System.Drawing.Point(15, 224);
             this.dgActual.Name = "dgActual";
             this.dgActual.ReadOnly = true;
-            this.dgActual.Size = new System.Drawing.Size(240, 272);
+            this.dgActual.Size = new System.Drawing.Size(240, 182);
             this.dgActual.TabIndex = 8;
             this.dgActual.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dgActual_KeyPress);
             // 
@@ -299,18 +306,19 @@
             // 
             this.lblMaxQuantum.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblMaxQuantum.ForeColor = System.Drawing.Color.Black;
-            this.lblMaxQuantum.Location = new System.Drawing.Point(418, 56);
+            this.lblMaxQuantum.Location = new System.Drawing.Point(574, 59);
             this.lblMaxQuantum.Name = "lblMaxQuantum";
-            this.lblMaxQuantum.Size = new System.Drawing.Size(129, 27);
+            this.lblMaxQuantum.Size = new System.Drawing.Size(74, 20);
             this.lblMaxQuantum.TabIndex = 28;
             // 
             // label13
             // 
+            this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.Color.Black;
-            this.label13.Location = new System.Drawing.Point(295, 60);
+            this.label13.Location = new System.Drawing.Point(456, 59);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(118, 27);
+            this.label13.Size = new System.Drawing.Size(112, 20);
             this.label13.TabIndex = 27;
             this.label13.Text = "Max Quantum:";
             // 
@@ -356,11 +364,58 @@
             this.label1.TabIndex = 32;
             this.label1.Text = "Proceso Siguiente";
             // 
+            // lblSuspendidos
+            // 
+            this.lblSuspendidos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSuspendidos.ForeColor = System.Drawing.Color.Black;
+            this.lblSuspendidos.Location = new System.Drawing.Point(361, 59);
+            this.lblSuspendidos.Name = "lblSuspendidos";
+            this.lblSuspendidos.Size = new System.Drawing.Size(74, 20);
+            this.lblSuspendidos.TabIndex = 34;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.ForeColor = System.Drawing.Color.Black;
+            this.label16.Location = new System.Drawing.Point(249, 59);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(106, 20);
+            this.label16.TabIndex = 33;
+            this.label16.Text = "Suspendidos:";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.Color.Blue;
+            this.label15.Location = new System.Drawing.Point(54, 421);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(165, 20);
+            this.label15.TabIndex = 36;
+            this.label15.Text = "Suspendido Siguiente";
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(16, 443);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.Size = new System.Drawing.Size(240, 53);
+            this.dataGridView1.TabIndex = 35;
+            // 
             // frmProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(842, 504);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.lblSuspendidos);
+            this.Controls.Add(this.label16);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dgSiguiente);
             this.Controls.Add(this.lblQuantum);
@@ -397,6 +452,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgConcluidos)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgBloqueados)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgSiguiente)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -433,5 +489,9 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.DataGridView dgSiguiente;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblSuspendidos;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

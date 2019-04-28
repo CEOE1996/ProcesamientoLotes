@@ -22,6 +22,7 @@ namespace SeminarioSO
         Queue<clsProceso> ProcesosNuevos = new Queue<clsProceso>();
         Queue<clsProceso> ProcesosListos = new Queue<clsProceso>();
         Queue<clsProceso> ProcesosBloqueados = new Queue<clsProceso>();
+        Queue<clsProceso> ProcesosSuspendidos = new Queue<clsProceso>();
         clsProceso ProcesoActual;
         clsMemoria Memoria = new clsMemoria(MAX_MEMORY, MAX_MARCO);
 

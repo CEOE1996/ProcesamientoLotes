@@ -48,7 +48,7 @@
             this.pnlPaginas.Location = new System.Drawing.Point(9, 63);
             this.pnlPaginas.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.pnlPaginas.Name = "pnlPaginas";
-            this.pnlPaginas.Size = new System.Drawing.Size(1051, 257);
+            this.pnlPaginas.Size = new System.Drawing.Size(1045, 257);
             this.pnlPaginas.TabIndex = 5;
             this.pnlPaginas.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlPaginas_Paint);
             // 

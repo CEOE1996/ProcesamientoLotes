@@ -24,6 +24,7 @@ namespace SeminarioSO.Clases
         public int TR; //Tiempo Restante
         public int Numero;
         public bool Concluido = false;
+        public int Tamano;
 
         public int Llegada = -1;
         public int Finalizacion;
@@ -35,7 +36,7 @@ namespace SeminarioSO.Clases
 
         private static int ID;
 
-        public clsProceso(string Operacion, string Resultado, int TME, int Numero)
+        public clsProceso(string Operacion, string Resultado, int TME, int Numero, int Tamano)
         {
             this.Operacion = Operacion;
             this.Resultado = Resultado;
@@ -43,6 +44,7 @@ namespace SeminarioSO.Clases
             this.TR = TME;
             this.Numero = Numero;
             this.Respuesta = -1;
+            this.Tamano = Tamano;
         }
 
         //Se requiere recibir el Random para evitar la misma informacion
@@ -89,7 +91,8 @@ namespace SeminarioSO.Clases
             this.Operacion = N1.ToString() + Signo + N2.ToString();
             this.Resultado = Math.Round(Resultado, 4).ToString();
             this.TME = this.TR = this.Servicio = R.Next(7, 18);
-            
+            this.Tamano = R.Next(7, 30);
+
             this.Numero = ++ID;
             this.Respuesta = -1;
         }

@@ -14,7 +14,7 @@ namespace SeminarioSO
     public partial class frmTablaPaginas : Form
     {
         clsMemoria Memoria;
-        const int SIZE = 30;
+        const int SIZE = 29;
 
         public frmTablaPaginas(clsMemoria Memoria)
         {
@@ -60,7 +60,7 @@ namespace SeminarioSO
                 int y = 0;
                 while(y < Memoria.SizeMarco && M.Memoria[y] == true)
                 {
-                    pnlPaginas.CreateGraphics().FillRectangle(sb, x, y * 50 + 50, SIZE, 50);
+                    pnlPaginas.CreateGraphics().FillRectangle(sb, x, y * 40 + 50, SIZE, 40);
                     y++;
                 }
 

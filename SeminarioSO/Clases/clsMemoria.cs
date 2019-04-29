@@ -48,15 +48,15 @@ namespace SeminarioSO.Clases
 
         public void addProcess(clsProceso P)
         {
-            if(!canAccess(P.TME))
+            if(!canAccess(P.Tamano))
             {
                 return;
             }
 
-            int TME = P.TME;
+            int Tamano = P.Tamano;
             int count = 0;
 
-            while(TME > 0)
+            while(Tamano > 0)
             {
                 if(Marcos[count].Estatus == (int)Estatus.Disponible)
                 {
@@ -66,9 +66,9 @@ namespace SeminarioSO.Clases
                     for(int i = 0; i < SizeMarco; i++)
                     {
                         Marcos[count].Memoria[i] = true;
-                        TME--;
+                        Tamano--;
 
-                        if (TME == 0) break;
+                        if (Tamano == 0) break;
                     }
                 }
 

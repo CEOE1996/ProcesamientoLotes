@@ -72,7 +72,7 @@ namespace SeminarioSO
                 AddConcluido();
                 setActual();
             }
-            else if(ProcesosNuevos.Count == 0 && ProcesosBloqueados.Count == 0)
+            else if(ProcesosNuevos.Count == 0 && ProcesosBloqueados.Count == 0 && ProcesosSuspendidos.Count == 0)
             {
                 AddConcluido();
                 timer1.Stop();

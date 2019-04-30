@@ -386,6 +386,7 @@ namespace SeminarioSO
 
                 x += SIZE;
             }
+        }
 
         private void GuardarSuspendidos()
         {

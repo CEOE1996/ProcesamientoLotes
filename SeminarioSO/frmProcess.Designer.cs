@@ -58,6 +58,7 @@
             this.label14 = new System.Windows.Forms.Label();
             this.dgSiguiente = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
+            this.pnlPaginas = new System.Windows.Forms.Panel();
             this.lblSuspendidos = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
@@ -139,10 +140,10 @@
             this.dgConcluidos.AllowUserToDeleteRows = false;
             this.dgConcluidos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgConcluidos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgConcluidos.Location = new System.Drawing.Point(590, 131);
+            this.dgConcluidos.Location = new System.Drawing.Point(602, 132);
             this.dgConcluidos.Name = "dgConcluidos";
             this.dgConcluidos.ReadOnly = true;
-            this.dgConcluidos.Size = new System.Drawing.Size(240, 365);
+            this.dgConcluidos.Size = new System.Drawing.Size(240, 353);
             this.dgConcluidos.TabIndex = 9;
             this.dgConcluidos.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dgActual_KeyPress);
             // 
@@ -162,7 +163,7 @@
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Blue;
-            this.label5.Location = new System.Drawing.Point(627, 109);
+            this.label5.Location = new System.Drawing.Point(642, 109);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(161, 20);
             this.label5.TabIndex = 11;
@@ -173,7 +174,7 @@
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.Blue;
-            this.label6.Location = new System.Drawing.Point(328, 109);
+            this.label6.Location = new System.Drawing.Point(345, 109);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(162, 20);
             this.label6.TabIndex = 0;
@@ -284,7 +285,7 @@
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.Blue;
-            this.label10.Location = new System.Drawing.Point(335, 365);
+            this.label10.Location = new System.Drawing.Point(344, 353);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(164, 20);
             this.label10.TabIndex = 26;
@@ -296,7 +297,7 @@
             this.dgBloqueados.AllowUserToDeleteRows = false;
             this.dgBloqueados.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgBloqueados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgBloqueados.Location = new System.Drawing.Point(298, 387);
+            this.dgBloqueados.Location = new System.Drawing.Point(306, 375);
             this.dgBloqueados.Name = "dgBloqueados";
             this.dgBloqueados.ReadOnly = true;
             this.dgBloqueados.Size = new System.Drawing.Size(240, 109);
@@ -364,6 +365,15 @@
             this.label1.TabIndex = 32;
             this.label1.Text = "Proceso Siguiente";
             // 
+            // pnlPaginas
+            // 
+            this.pnlPaginas.Location = new System.Drawing.Point(16, 489);
+            this.pnlPaginas.Margin = new System.Windows.Forms.Padding(2);
+            this.pnlPaginas.Name = "pnlPaginas";
+            this.pnlPaginas.Size = new System.Drawing.Size(829, 139);
+            this.pnlPaginas.TabIndex = 33;
+            this.pnlPaginas.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlPaginas_Paint);
+            //
             // lblSuspendidos
             // 
             this.lblSuspendidos.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -411,7 +421,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(842, 504);
+            this.ClientSize = new System.Drawing.Size(853, 636);
+            this.Controls.Add(this.pnlPaginas);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.dgSuspendidos);
             this.Controls.Add(this.lblSuspendidos);
@@ -489,6 +500,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.DataGridView dgSiguiente;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel pnlPaginas;
         private System.Windows.Forms.Label lblSuspendidos;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;

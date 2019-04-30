@@ -22,6 +22,7 @@ namespace SeminarioSO
         Queue<clsProceso> ProcesosNuevos = new Queue<clsProceso>();
         Queue<clsProceso> ProcesosListos = new Queue<clsProceso>();
         Queue<clsProceso> ProcesosBloqueados = new Queue<clsProceso>();
+        Queue<clsProceso> ProcesosSuspendidos = new Queue<clsProceso>();
         clsProceso ProcesoActual;
         clsMemoria Memoria = new clsMemoria(MAX_MEMORY, MAX_MARCO);
 
@@ -56,6 +57,7 @@ namespace SeminarioSO
                 ProcesosListos.Enqueue(P);
                 Memoria.addProcess(P);
                 CountProcesos++;
+                dgSiguiente.DataSource = SetSiguiente(ProcesosNuevos);
             }
 
             if (ProcesoActual != null && ProcesoActual.TR > 0)
@@ -71,7 +73,7 @@ namespace SeminarioSO
                 setActual();
                 pnlPaginas.Invalidate();
             }
-            else if(ProcesosNuevos.Count == 0 && ProcesosBloqueados.Count == 0)
+            else if(ProcesosNuevos.Count == 0 && ProcesosBloqueados.Count == 0 && ProcesosSuspendidos.Count == 0)
             {
                 AddConcluido();
                 timer1.Stop();
@@ -83,8 +85,8 @@ namespace SeminarioSO
             }
 
             lblCounterLote.Text = ProcesosNuevos.Count.ToString();
+            lblSuspendidos.Text = ProcesosSuspendidos.Count.ToString();
             setData(ProcesoActual);
-            dgSiguiente.DataSource = SetSiguiente(ProcesosNuevos);
             ProcessBloqueados();
 
             if (Quantum >= MAX_QUANTUM)
@@ -250,6 +252,7 @@ namespace SeminarioSO
                     if (timer1.Enabled)
                     {
                         ProcesosNuevos.Enqueue(new clsProceso(R));
+                        dgSiguiente.DataSource = SetSiguiente(ProcesosNuevos);
                         Procesar();
                     }
                     break;
@@ -292,6 +295,24 @@ namespace SeminarioSO
                     Paginas.ShowDialog();
                     this.Show();
                     timer1.Start();
+                    break;
+                case Keys.S: //Suspendido
+                    if(ProcesosBloqueados.Count > 0)
+                    {
+                        clsProceso Suspendido = ProcesosBloqueados.Dequeue();
+                        Memoria.removeProcess(Suspendido.Numero);
+                        ProcesosSuspendidos.Enqueue(Suspendido);
+                        GuardarSuspendidos();
+                    }
+                    break;
+                case Keys.R: //Regresa Suspendido
+                    if (ProcesosSuspendidos.Count > 0 && Memoria.canAccess(ProcesosSuspendidos.First().TME))
+                    {
+                        clsProceso Suspendido = ProcesosSuspendidos.Dequeue();
+                        Memoria.addProcess(Suspendido);
+                        ProcesosListos.Enqueue(Suspendido);
+                        GuardarSuspendidos();
+                    }
                     break;
             }
         }
@@ -365,6 +386,17 @@ namespace SeminarioSO
 
                 x += SIZE;
             }
+
+        private void GuardarSuspendidos()
+        {
+            System.IO.StreamWriter Escribir = new System.IO.StreamWriter("Suspendidos.txt");
+            foreach (clsProceso P in ProcesosSuspendidos)
+            {
+                Escribir.WriteLine(P.ToString());
+            }
+            Escribir.Close();
+
+            dgSuspendidos.DataSource = SetSiguiente(ProcesosSuspendidos);
         }
     }
 }

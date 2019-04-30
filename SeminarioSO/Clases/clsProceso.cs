@@ -117,7 +117,7 @@ namespace SeminarioSO.Clases
 
         public override string ToString()
         {
-            return Numero.ToString() + "|" + Operacion + "|" + TME.ToString() + "|" + TR.ToString();
+            return Numero.ToString() + "|" + Operacion + "|" + TME.ToString() + "|" + TR.ToString() + "|" + Tamano.ToString();
         }
     }
 }

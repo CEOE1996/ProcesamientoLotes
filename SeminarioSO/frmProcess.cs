@@ -25,6 +25,7 @@ namespace SeminarioSO
         Queue<clsProceso> ProcesosSuspendidos = new Queue<clsProceso>();
         clsProceso ProcesoActual;
         clsMemoria Memoria = new clsMemoria(MAX_MEMORY, MAX_MARCO);
+        clsMemoria MemoriaVirtual = new clsMemoria(MAX_MEMORY, MAX_MARCO);
 
         List<clsProceso> Concluidos = new List<clsProceso>();
         int Counter = 0, CountProcesos = 0, Quantum = 0;

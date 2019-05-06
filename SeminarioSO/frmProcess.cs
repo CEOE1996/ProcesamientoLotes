@@ -302,11 +302,12 @@ namespace SeminarioSO
                         clsProceso Suspendido = ProcesosBloqueados.Dequeue();
                         Memoria.removeProcess(Suspendido.Numero);
                         ProcesosSuspendidos.Enqueue(Suspendido);
+                        pnlPaginas.Invalidate();
                         GuardarSuspendidos();
                     }
                     break;
                 case Keys.R: //Regresa Suspendido
-                    if (ProcesosSuspendidos.Count > 0 && Memoria.canAccess(ProcesosSuspendidos.First().TME))
+                    if (ProcesosSuspendidos.Count > 0 && Memoria.canAccess(ProcesosSuspendidos.First().Tamano))
                     {
                         clsProceso Suspendido = ProcesosSuspendidos.Dequeue();
                         Memoria.addProcess(Suspendido);

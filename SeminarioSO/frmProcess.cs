@@ -271,6 +271,7 @@ namespace SeminarioSO
                         BCP.AddRange(ProcesosListos);
                         BCP.AddRange(ProcesosBloqueados);
                         BCP.AddRange(ProcesosNuevos);
+                        BCP.AddRange(ProcesosSuspendidos);
 
                         foreach (clsProceso p in BCP) {
                             if (!p.Concluido)

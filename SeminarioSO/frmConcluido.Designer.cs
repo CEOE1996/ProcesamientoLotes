@@ -59,6 +59,7 @@
             this.dgConcluidos.RowTemplate.Height = 28;
             this.dgConcluidos.Size = new System.Drawing.Size(1143, 571);
             this.dgConcluidos.TabIndex = 5;
+            this.dgConcluidos.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.dgConcluidos_KeyPress);
             // 
             // lblCounter
             // 

@@ -48,15 +48,15 @@ namespace SeminarioSO
             {
                 if (Finish)
                 {
-                    dt.Rows.Add(P.Numero, "Concluido", P.Operacion, P.Resultado, P.TME, P.Llegada, P.Finalizacion, P.Retorno, P.Respuesta, P.Espera, P.Servicio);
+                    dt.Rows.Add(P.Numero, P.Estado, P.Operacion, P.Resultado, P.TME, P.Llegada, P.Finalizacion, P.Retorno, P.Respuesta, P.Espera, P.Servicio);
                 }
                 else if (P.Concluido)
                 {
-                    dt.Rows.Add(P.Numero, "Concluido", P.Operacion, P.Resultado, P.TME, P.Llegada, P.Finalizacion, P.Retorno, P.Respuesta, P.Espera, P.Servicio, 10 - P.Bloqueado);
+                    dt.Rows.Add(P.Numero, P.Estado, P.Operacion, P.Resultado, P.TME, P.Llegada, P.Finalizacion, P.Retorno, P.Respuesta, P.Espera, P.Servicio, 10 - P.Bloqueado);
                 }
                 else if (P.Llegada == -1)
                 {
-                    dt.Rows.Add(P.Numero, "Nuevo", P.Operacion, "", P.TME, "", "", "", "", "", "", "");
+                    dt.Rows.Add(P.Numero, P.Estado, P.Operacion, "", P.TME, "", "", "", "", "", "", "");
                 }
                 else 
                 {

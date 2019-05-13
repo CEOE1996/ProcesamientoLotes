@@ -54,6 +54,7 @@ namespace SeminarioSO
             {
                 clsProceso P = ProcesosNuevos.Dequeue();
                 P.Llegada = Counter;
+                P.Estado = "Listo";
                 ProcesosListos.Enqueue(P);
                 Memoria.addProcess(P);
                 CountProcesos++;
@@ -91,6 +92,7 @@ namespace SeminarioSO
 
             if (Quantum >= MAX_QUANTUM)
             {
+                ProcesoActual.Estado = "Listo";
                 ProcesosListos.Enqueue(ProcesoActual);
                 Memoria.changeStatus(ProcesoActual.Numero, 1);
                 setActual();
@@ -133,6 +135,7 @@ namespace SeminarioSO
                 return;
             }
 
+            ProcesoActual.Estado = "Concluido";
             ProcesoActual.Finalizacion = Counter;
             ProcesoActual.Concluido = true;
             Memoria.removeProcess(ProcesoActual.Numero);
@@ -225,6 +228,7 @@ namespace SeminarioSO
                     if (timer1.Enabled)
                     {
                         ProcesoActual.Bloqueado = 0;
+                        ProcesoActual.Estado = "Bloqueado";
                         ProcesosBloqueados.Enqueue(ProcesoActual);
                         Memoria.changeStatus(ProcesoActual.Numero, 3);
                         setActual();
@@ -302,6 +306,7 @@ namespace SeminarioSO
                     {
                         clsProceso Suspendido = ProcesosBloqueados.Dequeue();
                         Memoria.removeProcess(Suspendido.Numero);
+                        Suspendido.Estado = "Suspendido";
                         ProcesosSuspendidos.Enqueue(Suspendido);
                         pnlPaginas.Invalidate();
                         GuardarSuspendidos();
@@ -312,6 +317,7 @@ namespace SeminarioSO
                     {
                         clsProceso Suspendido = ProcesosSuspendidos.Dequeue();
                         Memoria.addProcess(Suspendido);
+                        Suspendido.Estado = "Bloqueado";
                         ProcesosListos.Enqueue(Suspendido);
                         GuardarSuspendidos();
                     }
@@ -324,6 +330,7 @@ namespace SeminarioSO
             if (ProcesosListos.Count > 0)
             {
                 ProcesoActual = ProcesosListos.Dequeue();
+                ProcesoActual.Estado = "En Ejecucion";
                 Memoria.changeStatus(ProcesoActual.Numero, 2);
                 if(ProcesoActual.Respuesta == -1)
                 {

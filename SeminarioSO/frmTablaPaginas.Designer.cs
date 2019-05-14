@@ -37,29 +37,28 @@
             this.lblTitle.AutoSize = true;
             this.lblTitle.Font = new System.Drawing.Font("Calibri", 24F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.Red;
-            this.lblTitle.Location = new System.Drawing.Point(415, 6);
+            this.lblTitle.Location = new System.Drawing.Point(622, 9);
+            this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(243, 39);
+            this.lblTitle.Size = new System.Drawing.Size(359, 59);
             this.lblTitle.TabIndex = 4;
             this.lblTitle.Text = "Tabla de Paginas";
             // 
             // pnlPaginas
             // 
-            this.pnlPaginas.Location = new System.Drawing.Point(9, 63);
-            this.pnlPaginas.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pnlPaginas.Location = new System.Drawing.Point(14, 79);
             this.pnlPaginas.Name = "pnlPaginas";
-            this.pnlPaginas.Size = new System.Drawing.Size(1045, 257);
+            this.pnlPaginas.Size = new System.Drawing.Size(1568, 850);
             this.pnlPaginas.TabIndex = 5;
             this.pnlPaginas.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlPaginas_Paint);
             // 
             // frmTablaPaginas
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1066, 329);
+            this.ClientSize = new System.Drawing.Size(1924, 1050);
             this.Controls.Add(this.pnlPaginas);
             this.Controls.Add(this.lblTitle);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "frmTablaPaginas";
             this.Text = "Tabla Paginas";
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.frmTablaPaginas_KeyPress);

@@ -13,27 +13,33 @@ namespace SeminarioSO
 {
     public partial class frmTablaPaginas : Form
     {
-        clsMemoria Memoria;
+        clsMemoria Memoria, MemoriaVirtual;
         const int SIZE = 29;
 
-        public frmTablaPaginas(clsMemoria Memoria)
+        public frmTablaPaginas(clsMemoria Memoria, clsMemoria MemoriaVirtual)
         {
             this.Memoria = Memoria;
+            this.MemoriaVirtual = MemoriaVirtual;
             InitializeComponent();
 
         }
 
-        private void DrawPages()
+        private void DrawPages(clsMemoria Mem, int YI, string Name)
         {
             Pen p = new Pen(Color.Black);
             SolidBrush sb = new SolidBrush(Color.Black);
             SolidBrush sbFont = new SolidBrush(Color.Black);
             int x = 0;
 
+            Font Title = new Font("Arial", 16, FontStyle.Bold);
             Font Header = new Font("Arial", 14, FontStyle.Bold);
             Font Text = new Font("Arial", 12, FontStyle.Regular);
 
-            foreach (clsMarco M in Memoria.Marcos)
+            pnlPaginas.CreateGraphics().DrawString(Name, Text, new SolidBrush(Color.Blue), pnlPaginas.Size.Width / 2 - (Name.Length / 2 * 5), YI);
+
+            YI += 20;
+
+            foreach (clsMarco M in Mem.Marcos)
             {
                 switch (M.Estatus)
                 {
@@ -54,21 +60,21 @@ namespace SeminarioSO
                         break;
                 }
 
-                pnlPaginas.CreateGraphics().DrawRectangle(p, x, 0, SIZE, 50);
-                pnlPaginas.CreateGraphics().DrawString(M.ID.ToString(), Header, sbFont, x + 3, 20);
+                pnlPaginas.CreateGraphics().DrawRectangle(p, x, YI, SIZE, 50);
+                pnlPaginas.CreateGraphics().DrawString(M.ID.ToString(), Header, sbFont, x + 3, YI + 20);
 
                 int y = 0;
                 while(y < Memoria.SizeMarco && M.Memoria[y] == true)
                 {
-                    pnlPaginas.CreateGraphics().FillRectangle(sb, x, y * 40 + 50, SIZE, 40);
+                    pnlPaginas.CreateGraphics().FillRectangle(sb, x, YI + y * 40 + 50, SIZE, 40);
                     y++;
                 }
 
-                pnlPaginas.CreateGraphics().DrawRectangle(p, x, 50, SIZE, 200);
+                pnlPaginas.CreateGraphics().DrawRectangle(p, x, YI + 50, SIZE, 200);
 
                 if (M.Estatus > 0)
                 {
-                    pnlPaginas.CreateGraphics().DrawString(M.Proceso.ToString(), Text, sbFont, x + 3, 60);
+                    pnlPaginas.CreateGraphics().DrawString(M.Proceso.ToString(), Text, sbFont, x + 3, YI + 60);
                 }
 
                 x += SIZE;
@@ -77,7 +83,8 @@ namespace SeminarioSO
 
         private void pnlPaginas_Paint(object sender, PaintEventArgs e)
         {
-           DrawPages();
+           DrawPages(Memoria, 0, "Memoria Principal");
+           DrawPages(MemoriaVirtual, 275, "Memoria Virtual");
         }
 
         private void frmTablaPaginas_KeyPress(object sender, KeyPressEventArgs e)

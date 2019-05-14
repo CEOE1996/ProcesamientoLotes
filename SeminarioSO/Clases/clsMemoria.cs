@@ -38,7 +38,7 @@ namespace SeminarioSO.Clases
 
         public bool canAccess(double TME)
         {
-            if (getDisponible() < TME)
+            if (getDisponible() < TME / (double) SizeMarco)
             {
                 return false;
             }
@@ -111,8 +111,9 @@ namespace SeminarioSO.Clases
 
         public clsMarco removeMarco(int ID)
         {
-            clsMarco M = Marcos[ID];
+            clsMarco M = new clsMarco(Marcos[ID]);
             Marcos[ID].Estatus = (int)Estatus.Disponible;
+            Marcos[ID].Proceso = 0;
             for (int j = 0; j < SizeMarco; j++)
                 Marcos[ID].Memoria[j] = false;
 
@@ -130,7 +131,9 @@ namespace SeminarioSO.Clases
             {
                 if(Marcos[i].Estatus == (int)Estatus.Disponible)
                 {
-                    Marcos[i] = M;
+                    Marcos[i].Proceso = M.Proceso;
+                    Marcos[i].Estatus = M.Estatus;
+                    Marcos[i].Memoria = M.Memoria;
                     break;
                 }
             }
@@ -138,7 +141,7 @@ namespace SeminarioSO.Clases
 
         public IEnumerable<int> getDistinctProcess()
         {
-            return Marcos.Select(c => c.Proceso).Distinct();
+            return Marcos.Where(c=> c.Proceso > 0).Select(c => c.Proceso).Distinct();
         }
     }
 }

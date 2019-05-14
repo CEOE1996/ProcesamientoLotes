@@ -24,6 +24,17 @@ namespace SeminarioSO.Clases
                 Memoria[i] = false;
         }
 
+        public clsMarco(clsMarco M)
+        {
+            this.Proceso = M.Proceso;
+            this.Estatus = M.Estatus;
+            this.Memoria = new bool[M.Memoria.Count()];
+
+            for (int i = 0; i < M.Memoria.Count(); i++)
+            {
+                Memoria[i] = M.Memoria[i];
+            }
+        }
     }
 
 }

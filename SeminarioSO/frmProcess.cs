@@ -302,7 +302,7 @@ namespace SeminarioSO
                     break;
                 case Keys.M: //Tabla paginas
                     timer1.Stop();
-                    frmTablaPaginas Paginas = new frmTablaPaginas(Memoria);
+                    frmTablaPaginas Paginas = new frmTablaPaginas(Memoria, MemoriaVirtual);
                     this.Hide();
                     Paginas.ShowDialog();
                     this.Show();
@@ -337,13 +337,13 @@ namespace SeminarioSO
                             List<clsMarco> Virtual = Memoria.getProcess(i);
                             int len = Virtual.Count - 1;
 
-                            if (Virtual[len].Estatus != 2 && Memoria.canAccess(1))
+                            if (len > 0 && Virtual[len].Estatus != 2 && MemoriaVirtual.canAccess(1))
                             {
-
+                                MemoriaVirtual.addMarco(Memoria.removeMarco(Virtual[len].ID));
                             }
                         }
                     }
-
+                    pnlPaginas.Invalidate();
                     break;
             }
         }
@@ -352,14 +352,31 @@ namespace SeminarioSO
         {
             if (ProcesosListos.Count > 0)
             {
+                Quantum = 0;
                 ProcesoActual = ProcesosListos.Dequeue();
+
+                if(Memoria.getSizeProceso(ProcesoActual.Numero) < ProcesoActual.Tamano / (double)MAX_MARCO)
+                {
+                    if(!Memoria.canAccess(MemoriaVirtual.getSizeProceso(ProcesoActual.Numero) * MAX_MARCO))
+                    {
+                        ProcesosListos.Enqueue(ProcesoActual);
+                        ProcesoActual = null;
+                        return;
+                    }
+
+                    List<clsMarco> Virtual = MemoriaVirtual.getProcess(ProcesoActual.Numero);
+                    foreach(clsMarco M in Virtual)
+                    {
+                        Memoria.addMarco(MemoriaVirtual.removeMarco(M.ID));
+                    }
+                }
+
                 ProcesoActual.Estado = "En Ejecucion";
                 Memoria.changeStatus(ProcesoActual.Numero, 2);
                 if(ProcesoActual.Respuesta == -1)
                 {
                     ProcesoActual.Respuesta = Counter - ProcesoActual.Llegada;
                 }
-                Quantum = 0;
             }
             else
             {

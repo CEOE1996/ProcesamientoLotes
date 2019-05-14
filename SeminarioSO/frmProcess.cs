@@ -68,21 +68,25 @@ namespace SeminarioSO
                 txtTT.Text = (ProcesoActual.TME - ProcesoActual.TR).ToString();
                 lblQuantum.Text = (++Quantum).ToString();
             }
-            else if (ProcesosListos.Count > 0)
+            else if (ProcesoActual != null)
             {
                 AddConcluido();
-                setActual();
                 pnlPaginas.Invalidate();
             }
-            else if(ProcesosNuevos.Count == 0 && ProcesosBloqueados.Count == 0 && ProcesosSuspendidos.Count == 0)
+            else if(ProcesosListos.Count > 0)
             {
-                AddConcluido();
-                timer1.Stop();
-                MessageBox.Show("Se han concluido todos los procesos", "Concluido", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                setActual();
+                pnlPaginas.Invalidate();
             }
             else
             {
                 lblCounter.Text = (++Counter).ToString();
+            }
+
+            if(ProcesosListos.Count + ProcesosNuevos.Count + ProcesosBloqueados.Count + ProcesosSuspendidos.Count == 0 && ProcesoActual == null)
+            {
+                timer1.Stop();
+                MessageBox.Show("Se han concluido todos los procesos", "Concluido", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
             lblCounterLote.Text = ProcesosNuevos.Count.ToString();
@@ -141,6 +145,8 @@ namespace SeminarioSO
             Memoria.removeProcess(ProcesoActual.Numero);
             Concluidos.Add(ProcesoActual);
             CountProcesos--;
+
+            ProcesoActual = null;
         }
 
         private void ProcessBloqueados()
@@ -236,7 +242,7 @@ namespace SeminarioSO
                     }
                     break;
                 case Keys.E: //Error
-                    if (timer1.Enabled)
+                    if (timer1.Enabled && ProcesoActual != null)
                     {
                         ProcesoActual.Resultado = "Error";
                         ProcesoActual.Servicio = ProcesoActual.TME - ProcesoActual.TR;
@@ -316,9 +322,9 @@ namespace SeminarioSO
                     if (ProcesosSuspendidos.Count > 0 && Memoria.canAccess(ProcesosSuspendidos.First().Tamano))
                     {
                         clsProceso Suspendido = ProcesosSuspendidos.Dequeue();
-                        Memoria.addProcess(Suspendido);
+                        Memoria.addProcess(Suspendido, 3);
                         Suspendido.Estado = "Bloqueado";
-                        ProcesosListos.Enqueue(Suspendido);
+                        ProcesosBloqueados.Enqueue(Suspendido);
                         GuardarSuspendidos();
                     }
                     break;

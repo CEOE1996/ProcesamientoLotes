@@ -48,6 +48,10 @@ namespace SeminarioSO.Clases
 
         public void addProcess(clsProceso P)
         {
+            this.addProcess(P, (int)Estatus.Listo);
+        }
+        public void addProcess(clsProceso P, int Estado)
+        {
             if(!canAccess(P.Tamano))
             {
                 return;
@@ -61,7 +65,7 @@ namespace SeminarioSO.Clases
                 if(Marcos[count].Estatus == (int)Estatus.Disponible)
                 {
                     Marcos[count].Proceso = P.Numero;
-                    Marcos[count].Estatus = (int)Estatus.Listo;
+                    Marcos[count].Estatus = Estado;
 
                     for(int i = 0; i < SizeMarco; i++)
                     {
@@ -88,6 +92,7 @@ namespace SeminarioSO.Clases
                 if (Marcos[i].Proceso == Proceso)
                 {
                     Marcos[i].Estatus = (int)Estatus.Disponible;
+                    Marcos[i].Proceso = 0;
                     for (int j = 0; j < SizeMarco; j++)
                         Marcos[i].Memoria[j] = false;
                 }

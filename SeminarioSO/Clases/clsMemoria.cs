@@ -114,7 +114,7 @@ namespace SeminarioSO.Clases
             clsMarco M = Marcos[ID];
             Marcos[ID].Estatus = (int)Estatus.Disponible;
             for (int j = 0; j < SizeMarco; j++)
-                Marcos[i].Memoria[j] = false;
+                Marcos[ID].Memoria[j] = false;
 
             return M;
         }
@@ -134,6 +134,11 @@ namespace SeminarioSO.Clases
                     break;
                 }
             }
+        }
+
+        public IEnumerable<int> getDistinctProcess()
+        {
+            return Marcos.Select(c => c.Proceso).Distinct();
         }
     }
 }

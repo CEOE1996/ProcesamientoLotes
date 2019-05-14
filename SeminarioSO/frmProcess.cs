@@ -329,6 +329,22 @@ namespace SeminarioSO
                         GuardarSuspendidos();
                     }
                     break;
+                case Keys.U: //Memoria Virtual
+                    if (timer1.Enabled)
+                    {
+                        foreach(int i in Memoria.getDistinctProcess())
+                        {
+                            List<clsMarco> Virtual = Memoria.getProcess(i);
+                            int len = Virtual.Count - 1;
+
+                            if (Virtual[len].Estatus != 2 && Memoria.canAccess(1))
+                            {
+
+                            }
+                        }
+                    }
+
+                    break;
             }
         }
 

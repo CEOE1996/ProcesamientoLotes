@@ -35,6 +35,8 @@ namespace SeminarioSO.Clases
         public int Servicio;
         public int Bloqueado;
 
+        bool isCompleted;
+
         private static int ID;
 
         public clsProceso(string Operacion, string Resultado, int TME, int Numero, int Tamano)
@@ -47,6 +49,7 @@ namespace SeminarioSO.Clases
             this.Respuesta = -1;
             this.Tamano = Tamano;
             this.Estado = "Nuevo";
+            isCompleted = true;
         }
 
         //Se requiere recibir el Random para evitar la misma informacion
@@ -98,6 +101,8 @@ namespace SeminarioSO.Clases
 
             this.Numero = ++ID;
             this.Respuesta = -1;
+
+            isCompleted = true;
         }
 
         public clsProceso() { }

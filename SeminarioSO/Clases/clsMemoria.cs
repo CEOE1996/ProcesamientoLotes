@@ -36,9 +36,9 @@ namespace SeminarioSO.Clases
             return Marcos.Where(c => c.Estatus == (int)Estatus.Disponible).Count();
         }
 
-        public bool canAccess(int TME)
+        public bool canAccess(double TME)
         {
-            if (getDisponible() < TME / (double)SizeMarco)
+            if (getDisponible() < TME)
             {
                 return false;
             }
@@ -99,5 +99,41 @@ namespace SeminarioSO.Clases
             }
         }
 
+        public int getSizeProceso(int Proceso)
+        {
+            return Marcos.Where(c => c.Proceso == Proceso).Count();
+        }
+
+        public List<clsMarco> getProcess(int Proceso)
+        {
+            return (Marcos.Where(c => c.Proceso == Proceso)).ToList();
+        }
+
+        public clsMarco removeMarco(int ID)
+        {
+            clsMarco M = Marcos[ID];
+            Marcos[ID].Estatus = (int)Estatus.Disponible;
+            for (int j = 0; j < SizeMarco; j++)
+                Marcos[i].Memoria[j] = false;
+
+            return M;
+        }
+
+        public void addMarco(clsMarco M)
+        {
+            if (!canAccess(1))
+            {
+                return;
+            }
+
+            for(int i = 0; i < Size; i++)
+            {
+                if(Marcos[i].Estatus == (int)Estatus.Disponible)
+                {
+                    Marcos[i] = M;
+                    break;
+                }
+            }
+        }
     }
 }

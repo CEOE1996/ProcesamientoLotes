@@ -232,7 +232,7 @@ namespace SeminarioSO
             switch (K)
             {
                 case Keys.I: //Interrupcion
-                    if (timer1.Enabled)
+                    if (timer1.Enabled && ProcesoActual != null)
                     {
                         ProcesoActual.Bloqueado = 0;
                         ProcesoActual.Estado = "Bloqueado";
@@ -301,18 +301,22 @@ namespace SeminarioSO
                     }
                     break;
                 case Keys.M: //Tabla paginas
-                    timer1.Stop();
-                    frmTablaPaginas Paginas = new frmTablaPaginas(Memoria, MemoriaVirtual);
-                    this.Hide();
-                    Paginas.ShowDialog();
-                    this.Show();
-                    timer1.Start();
+                    if (timer1.Enabled)
+                    {
+                        timer1.Stop();
+                        frmTablaPaginas Paginas = new frmTablaPaginas(Memoria, MemoriaVirtual);
+                        this.Hide();
+                        Paginas.ShowDialog();
+                        this.Show();
+                        timer1.Start();
+                    }
                     break;
                 case Keys.S: //Suspendido
                     if(ProcesosBloqueados.Count > 0)
                     {
                         clsProceso Suspendido = ProcesosBloqueados.Dequeue();
                         Memoria.removeProcess(Suspendido.Numero);
+                        MemoriaVirtual.removeProcess(Suspendido.Numero);
                         Suspendido.Estado = "Suspendido";
                         ProcesosSuspendidos.Enqueue(Suspendido);
                         pnlPaginas.Invalidate();

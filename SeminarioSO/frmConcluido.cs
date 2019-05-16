@@ -29,6 +29,7 @@ namespace SeminarioSO
         {
             DataTable dt = new DataTable();
             dt.Columns.Add("ID");
+            dt.Columns.Add("Estado");
             dt.Columns.Add("Operacion");
             dt.Columns.Add("Resultado");
             dt.Columns.Add("TME");
@@ -47,19 +48,19 @@ namespace SeminarioSO
             {
                 if (Finish)
                 {
-                    dt.Rows.Add(P.Numero, P.Operacion, P.Resultado, P.TME, P.Llegada, P.Finalizacion, P.Retorno, P.Respuesta, P.Espera, P.Servicio);
+                    dt.Rows.Add(P.Numero, P.Estado, P.Operacion, P.Resultado, P.TME, P.Llegada, P.Finalizacion, P.Retorno, P.Respuesta, P.Espera, P.Servicio);
                 }
                 else if (P.Concluido)
                 {
-                    dt.Rows.Add(P.Numero, P.Operacion, P.Resultado, P.TME, P.Llegada, P.Finalizacion, P.Retorno, P.Respuesta, P.Espera, P.Servicio, 10 - P.Bloqueado);
+                    dt.Rows.Add(P.Numero, P.Estado, P.Operacion, P.Resultado, P.TME, P.Llegada, P.Finalizacion, P.Retorno, P.Respuesta, P.Espera, P.Servicio, 10 - P.Bloqueado);
                 }
                 else if (P.Llegada == -1)
                 {
-                    dt.Rows.Add(P.Numero, P.Operacion, "", P.TME, "", "", "", "", "", "", "");
+                    dt.Rows.Add(P.Numero, P.Estado, P.Operacion, "", P.TME, "", "", "", "", "", "", "");
                 }
                 else 
                 {
-                    dt.Rows.Add(P.Numero, P.Operacion, "", P.TME, P.Llegada, "", "", P.Respuesta == -1 ? "" : P.Respuesta.ToString(), P.Espera, P.Servicio, P.Bloqueado > 0 ? 10 - P.Bloqueado: P.Bloqueado);
+                    dt.Rows.Add(P.Numero, P.Estado, P.Operacion, "", P.TME, P.Llegada, "", "", P.Respuesta == -1 ? "" : P.Respuesta.ToString(), P.Espera, P.Servicio, P.Bloqueado > 0 ? 10 - P.Bloqueado: P.Bloqueado);
                 }
             }
 

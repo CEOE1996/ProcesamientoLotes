@@ -25,6 +25,7 @@ namespace SeminarioSO.Clases
         public int Numero;
         public bool Concluido = false;
         public int Tamano;
+        public string Estado = "";
 
         public int Llegada = -1;
         public int Finalizacion;
@@ -45,6 +46,7 @@ namespace SeminarioSO.Clases
             this.Numero = Numero;
             this.Respuesta = -1;
             this.Tamano = Tamano;
+            this.Estado = "Nuevo";
         }
 
         //Se requiere recibir el Random para evitar la misma informacion
@@ -92,6 +94,7 @@ namespace SeminarioSO.Clases
             this.Resultado = Math.Round(Resultado, 4).ToString();
             this.TME = this.TR = this.Servicio = R.Next(7, 18);
             this.Tamano = R.Next(7, 30);
+            this.Estado = "Nuevo";
 
             this.Numero = ++ID;
             this.Respuesta = -1;
@@ -113,11 +116,13 @@ namespace SeminarioSO.Clases
             this.Respuesta = p.Respuesta;
             this.Servicio = p.Servicio;
             this.Bloqueado = p.Bloqueado;
+            this.Estado = p.Estado;
+            this.Tamano = p.Tamano;
         }
 
         public override string ToString()
         {
-            return base.ToString();
+            return Numero.ToString() + "|" + Operacion + "|" + TME.ToString() + "|" + TR.ToString() + "|" + Tamano.ToString();
         }
     }
 }

@@ -22,6 +22,7 @@ namespace SeminarioSO
         Queue<clsProceso> ProcesosNuevos = new Queue<clsProceso>();
         Queue<clsProceso> ProcesosListos = new Queue<clsProceso>();
         Queue<clsProceso> ProcesosBloqueados = new Queue<clsProceso>();
+        Queue<clsProceso> ProcesosSuspendidos = new Queue<clsProceso>();
         clsProceso ProcesoActual;
         clsMemoria Memoria = new clsMemoria(MAX_MEMORY, MAX_MARCO);
 
@@ -53,9 +54,11 @@ namespace SeminarioSO
             {
                 clsProceso P = ProcesosNuevos.Dequeue();
                 P.Llegada = Counter;
+                P.Estado = "Listo";
                 ProcesosListos.Enqueue(P);
                 Memoria.addProcess(P);
                 CountProcesos++;
+                dgSiguiente.DataSource = SetSiguiente(ProcesosNuevos);
             }
 
             if (ProcesoActual != null && ProcesoActual.TR > 0)
@@ -65,30 +68,35 @@ namespace SeminarioSO
                 txtTT.Text = (ProcesoActual.TME - ProcesoActual.TR).ToString();
                 lblQuantum.Text = (++Quantum).ToString();
             }
-            else if (ProcesosListos.Count > 0)
+            else if (ProcesoActual != null)
             {
                 AddConcluido();
-                setActual();
                 pnlPaginas.Invalidate();
             }
-            else if(ProcesosNuevos.Count == 0 && ProcesosBloqueados.Count == 0)
+            else if(ProcesosListos.Count > 0)
             {
-                AddConcluido();
-                timer1.Stop();
-                MessageBox.Show("Se han concluido todos los procesos", "Concluido", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                setActual();
+                pnlPaginas.Invalidate();
             }
             else
             {
                 lblCounter.Text = (++Counter).ToString();
             }
 
+            if(ProcesosListos.Count + ProcesosNuevos.Count + ProcesosBloqueados.Count + ProcesosSuspendidos.Count == 0 && ProcesoActual == null)
+            {
+                timer1.Stop();
+                MessageBox.Show("Se han concluido todos los procesos", "Concluido", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
             lblCounterLote.Text = ProcesosNuevos.Count.ToString();
+            lblSuspendidos.Text = ProcesosSuspendidos.Count.ToString();
             setData(ProcesoActual);
-            dgSiguiente.DataSource = SetSiguiente(ProcesosNuevos);
             ProcessBloqueados();
 
             if (Quantum >= MAX_QUANTUM)
             {
+                ProcesoActual.Estado = "Listo";
                 ProcesosListos.Enqueue(ProcesoActual);
                 Memoria.changeStatus(ProcesoActual.Numero, 1);
                 setActual();
@@ -131,11 +139,14 @@ namespace SeminarioSO
                 return;
             }
 
+            ProcesoActual.Estado = "Concluido";
             ProcesoActual.Finalizacion = Counter;
             ProcesoActual.Concluido = true;
             Memoria.removeProcess(ProcesoActual.Numero);
             Concluidos.Add(ProcesoActual);
             CountProcesos--;
+
+            ProcesoActual = null;
         }
 
         private void ProcessBloqueados()
@@ -223,6 +234,7 @@ namespace SeminarioSO
                     if (timer1.Enabled)
                     {
                         ProcesoActual.Bloqueado = 0;
+                        ProcesoActual.Estado = "Bloqueado";
                         ProcesosBloqueados.Enqueue(ProcesoActual);
                         Memoria.changeStatus(ProcesoActual.Numero, 3);
                         setActual();
@@ -230,7 +242,7 @@ namespace SeminarioSO
                     }
                     break;
                 case Keys.E: //Error
-                    if (timer1.Enabled)
+                    if (timer1.Enabled && ProcesoActual != null)
                     {
                         ProcesoActual.Resultado = "Error";
                         ProcesoActual.Servicio = ProcesoActual.TME - ProcesoActual.TR;
@@ -250,6 +262,7 @@ namespace SeminarioSO
                     if (timer1.Enabled)
                     {
                         ProcesosNuevos.Enqueue(new clsProceso(R));
+                        dgSiguiente.DataSource = SetSiguiente(ProcesosNuevos);
                         Procesar();
                     }
                     break;
@@ -268,6 +281,7 @@ namespace SeminarioSO
                         BCP.AddRange(ProcesosListos);
                         BCP.AddRange(ProcesosBloqueados);
                         BCP.AddRange(ProcesosNuevos);
+                        BCP.AddRange(ProcesosSuspendidos);
 
                         foreach (clsProceso p in BCP) {
                             if (!p.Concluido)
@@ -293,6 +307,27 @@ namespace SeminarioSO
                     this.Show();
                     timer1.Start();
                     break;
+                case Keys.S: //Suspendido
+                    if(ProcesosBloqueados.Count > 0)
+                    {
+                        clsProceso Suspendido = ProcesosBloqueados.Dequeue();
+                        Memoria.removeProcess(Suspendido.Numero);
+                        Suspendido.Estado = "Suspendido";
+                        ProcesosSuspendidos.Enqueue(Suspendido);
+                        pnlPaginas.Invalidate();
+                        GuardarSuspendidos();
+                    }
+                    break;
+                case Keys.R: //Regresa Suspendido
+                    if (ProcesosSuspendidos.Count > 0 && Memoria.canAccess(ProcesosSuspendidos.First().Tamano))
+                    {
+                        clsProceso Suspendido = ProcesosSuspendidos.Dequeue();
+                        Memoria.addProcess(Suspendido, 3);
+                        Suspendido.Estado = "Bloqueado";
+                        ProcesosBloqueados.Enqueue(Suspendido);
+                        GuardarSuspendidos();
+                    }
+                    break;
             }
         }
 
@@ -301,6 +336,7 @@ namespace SeminarioSO
             if (ProcesosListos.Count > 0)
             {
                 ProcesoActual = ProcesosListos.Dequeue();
+                ProcesoActual.Estado = "En Ejecucion";
                 Memoria.changeStatus(ProcesoActual.Numero, 2);
                 if(ProcesoActual.Respuesta == -1)
                 {
@@ -365,6 +401,18 @@ namespace SeminarioSO
 
                 x += SIZE;
             }
+        }
+
+        private void GuardarSuspendidos()
+        {
+            System.IO.StreamWriter Escribir = new System.IO.StreamWriter("Suspendidos.txt");
+            foreach (clsProceso P in ProcesosSuspendidos)
+            {
+                Escribir.WriteLine(P.ToString());
+            }
+            Escribir.Close();
+
+            dgSuspendidos.DataSource = SetSiguiente(ProcesosSuspendidos);
         }
     }
 }

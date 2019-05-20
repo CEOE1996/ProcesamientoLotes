@@ -361,26 +361,48 @@ namespace SeminarioSO
 
                 if(Memoria.getSizeProceso(ProcesoActual.Numero) < ProcesoActual.Tamano / (double)MAX_MARCO)
                 {
-                    if(!Memoria.canAccess(MemoriaVirtual.getSizeProceso(ProcesoActual.Numero) * MAX_MARCO))
-                    {
-                        ProcesosListos.Enqueue(ProcesoActual);
-                        ProcesoActual = null;
-                        return;
-                    }
-
                     List<clsMarco> Virtual = MemoriaVirtual.getProcess(ProcesoActual.Numero);
-                    foreach(clsMarco M in Virtual)
+                    if (Memoria.canAccess(Virtual.Count * MAX_MARCO))
                     {
-                        Memoria.addMarco(MemoriaVirtual.removeMarco(M.ID));
+                        foreach (clsMarco M in Virtual)
+                        {
+                            Memoria.addMarco(MemoriaVirtual.removeMarco(M.ID));
+                        }
                     }
+                    else
+                    {
+                        int LeftVirtual = 0, NumProceso = 0;
+                        List<int> Procesos = Memoria.getDistinctProcess().ToList();
+
+                        while (LeftVirtual < Virtual.Count)
+                        {
+                            List<clsMarco> Principal = Memoria.getProcess(Procesos[NumProceso]);
+                            int len = Principal.Count - 1;
+
+                            if (len > 0 && Principal[len].Proceso != ProcesoActual.Numero)
+                            {
+                                clsMarco M = Memoria.removeMarco(Principal[len].ID);
+                                Memoria.addMarco(MemoriaVirtual.removeMarco(Virtual[LeftVirtual].ID));
+                                MemoriaVirtual.addMarco(M);
+                                LeftVirtual++;
+                            }
+
+                            if (++NumProceso >= Procesos.Count)
+                            {
+                                NumProceso = 0;
+                            }
+                        }
+                    }
+                    pnlPaginas.Invalidate();
                 }
 
-                ProcesoActual.Estado = "En Ejecucion";
-                Memoria.changeStatus(ProcesoActual.Numero, 2);
                 if(ProcesoActual.Respuesta == -1)
                 {
                     ProcesoActual.Respuesta = Counter - ProcesoActual.Llegada;
                 }
+
+                ProcesoActual.Estado = "En Ejecucion";
+                Memoria.changeStatus(ProcesoActual.Numero, 2);
             }
             else
             {

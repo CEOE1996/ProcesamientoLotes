@@ -25,6 +25,7 @@ namespace SeminarioSO
         Queue<clsProceso> ProcesosSuspendidos = new Queue<clsProceso>();
         clsProceso ProcesoActual;
         clsMemoria Memoria = new clsMemoria(MAX_MEMORY, MAX_MARCO);
+        clsMemoria MemoriaVirtual = new clsMemoria(MAX_MEMORY, MAX_MARCO);
 
         List<clsProceso> Concluidos = new List<clsProceso>();
         int Counter = 0, CountProcesos = 0, Quantum = 0;
@@ -231,7 +232,7 @@ namespace SeminarioSO
             switch (K)
             {
                 case Keys.I: //Interrupcion
-                    if (timer1.Enabled)
+                    if (timer1.Enabled && ProcesoActual != null)
                     {
                         ProcesoActual.Bloqueado = 0;
                         ProcesoActual.Estado = "Bloqueado";
@@ -300,18 +301,22 @@ namespace SeminarioSO
                     }
                     break;
                 case Keys.M: //Tabla paginas
-                    timer1.Stop();
-                    frmTablaPaginas Paginas = new frmTablaPaginas(Memoria);
-                    this.Hide();
-                    Paginas.ShowDialog();
-                    this.Show();
-                    timer1.Start();
+                    if (timer1.Enabled)
+                    {
+                        timer1.Stop();
+                        frmTablaPaginas Paginas = new frmTablaPaginas(Memoria, MemoriaVirtual);
+                        this.Hide();
+                        Paginas.ShowDialog();
+                        this.Show();
+                        timer1.Start();
+                    }
                     break;
                 case Keys.S: //Suspendido
                     if(ProcesosBloqueados.Count > 0)
                     {
                         clsProceso Suspendido = ProcesosBloqueados.Dequeue();
                         Memoria.removeProcess(Suspendido.Numero);
+                        MemoriaVirtual.removeProcess(Suspendido.Numero);
                         Suspendido.Estado = "Suspendido";
                         ProcesosSuspendidos.Enqueue(Suspendido);
                         pnlPaginas.Invalidate();
@@ -328,6 +333,22 @@ namespace SeminarioSO
                         GuardarSuspendidos();
                     }
                     break;
+                case Keys.U: //Memoria Virtual
+                    if (timer1.Enabled)
+                    {
+                        foreach(int i in Memoria.getDistinctProcess())
+                        {
+                            List<clsMarco> Virtual = Memoria.getProcess(i);
+                            int len = Virtual.Count - 1;
+
+                            if (len > 0 && Virtual[len].Estatus != 2 && MemoriaVirtual.canAccess(1))
+                            {
+                                MemoriaVirtual.addMarco(Memoria.removeMarco(Virtual[len].ID));
+                            }
+                        }
+                    }
+                    pnlPaginas.Invalidate();
+                    break;
             }
         }
 
@@ -335,14 +356,53 @@ namespace SeminarioSO
         {
             if (ProcesosListos.Count > 0)
             {
+                Quantum = 0;
                 ProcesoActual = ProcesosListos.Dequeue();
-                ProcesoActual.Estado = "En Ejecucion";
-                Memoria.changeStatus(ProcesoActual.Numero, 2);
+
+                if(Memoria.getSizeProceso(ProcesoActual.Numero) < ProcesoActual.Tamano / (double)MAX_MARCO)
+                {
+                    List<clsMarco> Virtual = MemoriaVirtual.getProcess(ProcesoActual.Numero);
+                    if (Memoria.canAccess(Virtual.Count * MAX_MARCO))
+                    {
+                        foreach (clsMarco M in Virtual)
+                        {
+                            Memoria.addMarco(MemoriaVirtual.removeMarco(M.ID));
+                        }
+                    }
+                    else
+                    {
+                        int LeftVirtual = 0, NumProceso = 0;
+                        List<int> Procesos = Memoria.getDistinctProcess().ToList();
+
+                        while (LeftVirtual < Virtual.Count)
+                        {
+                            List<clsMarco> Principal = Memoria.getProcess(Procesos[NumProceso]);
+                            int len = Principal.Count - 1;
+
+                            if (len > 0 && Principal[len].Proceso != ProcesoActual.Numero)
+                            {
+                                clsMarco M = Memoria.removeMarco(Principal[len].ID);
+                                Memoria.addMarco(MemoriaVirtual.removeMarco(Virtual[LeftVirtual].ID));
+                                MemoriaVirtual.addMarco(M);
+                                LeftVirtual++;
+                            }
+
+                            if (++NumProceso >= Procesos.Count)
+                            {
+                                NumProceso = 0;
+                            }
+                        }
+                    }
+                    pnlPaginas.Invalidate();
+                }
+
                 if(ProcesoActual.Respuesta == -1)
                 {
                     ProcesoActual.Respuesta = Counter - ProcesoActual.Llegada;
                 }
-                Quantum = 0;
+
+                ProcesoActual.Estado = "En Ejecucion";
+                Memoria.changeStatus(ProcesoActual.Numero, 2);
             }
             else
             {
